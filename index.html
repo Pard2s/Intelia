@@ -1,0 +1,2703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!--
+    =====================================================================
+    PROYECTO: Intelia
+    MARCA:    Intelia — Desarrollo web, apps y automatización de procesos
+    ARCHIVO:  index.html (único archivo: CSS en la etiqueta de estilos, JS en la de script)
+    CONTACTO: WhatsApp +52 56 1171 7050
+    IMAGEN OPCIONAL: assets/buho.png (si no existe, se muestra el búho SVG integrado)
+    =====================================================================
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Intelia: tecnología a tu medida. Desarrollo web, apps a medida y automatización de procesos. Cotiza por WhatsApp.">
+  <meta name="theme-color" content="#070b19">
+  <title>INTELIA</title>
+
+  <style>
+    /* =====================================================================
+       1. VARIABLES DE DISEÑO (paleta exacta de la referencia)
+       ===================================================================== */
+    :root {
+      --bg: #070b19;
+      --bg-2: #0a0f24;
+      --card: #111836;
+      --card-2: #15204a;
+      --border: #1e295d;
+      --border-glow: rgba(6, 182, 212, 0.55);
+      --blue: #2563eb;
+      --blue-2: #3b82f6;
+      --cyan: #06b6d4;
+      --white: #ffffff;
+      --text-soft: #c3cbe6;
+      --muted: #8d98bf;
+      --green: #25d366;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --shadow-neon: 0 0 0 1px rgba(37, 99, 235, 0.25), 0 12px 34px rgba(37, 99, 235, 0.22);
+      --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.35);
+      --grad: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+      --ease: cubic-bezier(.2, .8, .2, 1);
+      --header-h: 76px;
+    }
+
+    /* =====================================================================
+       2. RESET Y BASE
+       ===================================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    body.modal-open, body.menu-open { overflow: hidden; }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; color: inherit; }
+    button { cursor: pointer; background: none; border: none; }
+    h1, h2, h3, h4 { line-height: 1.2; font-weight: 800; letter-spacing: -.01em; }
+    p { color: var(--text-soft); }
+    ul { list-style: none; }
+    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 8px; }
+    [hidden] { display: none !important; }
+
+    .container { width: min(1200px, 92%); margin-inline: auto; }
+    section { padding: 88px 0; position: relative; }
+    .section-title { font-size: clamp(1.8rem, 3.6vw, 2.5rem); margin-bottom: 10px; }
+    .section-title .accent { color: var(--blue-2); }
+    .section-sub { color: var(--muted); max-width: 640px; margin-bottom: 40px; }
+    .section-head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 36px; }
+    .section-head-row .section-sub { margin-bottom: 0; }
+    .link-arrow { color: var(--blue-2); font-weight: 600; display: inline-flex; align-items: center; gap: 6px; transition: gap .25s var(--ease), color .2s; }
+    .link-arrow:hover { color: var(--cyan); gap: 10px; }
+
+    /* =====================================================================
+       3. ICONOS (símbolos SVG reutilizables)
+       ===================================================================== */
+    .ic { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .ic-fill { fill: currentColor; stroke: none; }
+
+    /* =====================================================================
+       4. BOTONES
+       ===================================================================== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 13px 24px; border-radius: 999px;
+      font-weight: 700; font-size: .98rem; line-height: 1;
+      border: 1px solid transparent;
+      transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s, border-color .25s, color .25s;
+      white-space: nowrap; text-align: center;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary { background: var(--blue); color: var(--white); box-shadow: 0 8px 22px rgba(37, 99, 235, 0.4); }
+    .btn-primary:hover { background: #1d4ed8; box-shadow: 0 12px 30px rgba(37, 99, 235, 0.55); }
+    .btn-outline { background: rgba(37, 99, 235, 0.04); border-color: var(--blue); color: var(--white); }
+    .btn-outline:hover { background: rgba(37, 99, 235, 0.16); box-shadow: 0 0 22px rgba(37, 99, 235, 0.35); }
+    .btn-wa { background: var(--green); color: #04210f; box-shadow: 0 8px 22px rgba(37, 211, 102, 0.3); }
+    .btn-wa:hover { box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5); }
+    .btn-ghost { border-color: var(--border); background: rgba(255, 255, 255, 0.02); color: var(--text-soft); }
+    .btn-ghost:hover { border-color: var(--cyan); color: var(--white); }
+    .btn-sm { padding: 10px 18px; font-size: .88rem; }
+    .btn-block { width: 100%; }
+    .btn .ic { width: 18px; height: 18px; }
+
+    /* =====================================================================
+       5. HEADER / NAVBAR
+       ===================================================================== */
+    .header {
+      position: fixed; inset: 0 0 auto 0; z-index: 100;
+      height: var(--header-h);
+      background: rgba(7, 11, 25, 0.72);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s;
+    }
+    .header.scrolled { background: rgba(7, 11, 25, 0.96); border-bottom-color: var(--border); }
+    .nav { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 800; }
+    .brand-name { color: var(--white); }
+    .brand-name span { color: var(--cyan); font-weight: 500; }
+
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+    .nav-link { position: relative; color: var(--text-soft); font-weight: 500; font-size: .95rem; transition: color .2s; padding: 6px 0; }
+    .nav-link::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px;
+      background: var(--grad); transform: scaleX(0); transform-origin: left;
+      transition: transform .3s var(--ease);
+    }
+    .nav-link:hover, .nav-link.active { color: var(--blue-2); }
+    .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .menu-btn {
+      display: none; width: 44px; height: 44px; border-radius: 12px;
+      border: 1px solid var(--border); align-items: center; justify-content: center; color: var(--white);
+    }
+    .menu-btn .ic { width: 22px; height: 22px; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; top: var(--header-h); left: 0; right: 0; bottom: 0; z-index: 99;
+      background: rgba(7, 11, 25, 0.98);
+      padding: 24px 4%;
+      flex-direction: column; gap: 6px;
+      transform: translateX(100%);
+      transition: transform .35s var(--ease);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a.nav-link { font-size: 1.1rem; padding: 14px 4px; border-bottom: 1px solid var(--border); color: var(--white); }
+    .mobile-menu a.nav-link::after { display: none; }
+    .mobile-menu .btn { margin-top: 18px; }
+
+    /* =====================================================================
+       6. HERO
+       ===================================================================== */
+    .hero {
+      min-height: 100vh;
+      padding-top: calc(var(--header-h) + 48px);
+      padding-bottom: 56px;
+      display: flex; flex-direction: column; justify-content: center;
+      background:
+        radial-gradient(900px 500px at 78% 22%, rgba(37, 99, 235, 0.22), transparent 65%),
+        radial-gradient(700px 400px at 0% 100%, rgba(6, 182, 212, 0.08), transparent 60%),
+        var(--bg);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(37, 99, 235, .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, .05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at 70% 30%, #000 20%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at 70% 30%, #000 20%, transparent 70%);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 40px; align-items: center; position: relative; z-index: 1; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border-radius: 999px;
+      background: rgba(17, 24, 54, 0.8); border: 1px solid var(--border);
+      color: var(--text-soft); font-size: .85rem; font-weight: 500;
+    }
+    .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+
+    .hero h1 { font-size: clamp(2.4rem, 5.6vw, 4.2rem); margin: 24px 0 20px; }
+    .hero h1 .line-accent { color: var(--blue-2); display: block; }
+    .hero-sub { font-size: clamp(1rem, 1.6vw, 1.15rem); color: var(--text-soft); max-width: 540px; margin-bottom: 34px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 44px; }
+
+    .benefits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--border); padding-top: 26px; }
+    .benefit { display: flex; align-items: center; gap: 12px; padding: 0 16px; border-left: 1px solid var(--border); }
+    .benefit:first-child { padding-left: 0; border-left: none; }
+    .benefit-icon {
+      width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+      display: grid; place-items: center;
+      background: rgba(37, 99, 235, 0.12); border: 1px solid var(--border); color: var(--cyan);
+      transition: transform .3s var(--ease), box-shadow .3s;
+    }
+    .benefit:hover .benefit-icon { transform: translateY(-3px); box-shadow: 0 0 18px rgba(6, 182, 212, 0.35); }
+    .benefit span { font-size: .88rem; color: var(--text-soft); line-height: 1.35; font-weight: 500; }
+
+    .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; min-height: 460px; }
+    .hero-glow {
+      position: absolute; width: 85%; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 99, 235, .45), transparent 65%);
+      filter: blur(30px); animation: pulse 5s ease-in-out infinite;
+    }
+    .owl-hero { position: relative; z-index: 2; width: min(360px, 88%); height: auto; animation: float 6s ease-in-out infinite; filter: drop-shadow(0 24px 40px rgba(37, 99, 235, 0.45)); }
+    .owl-hero-img { display: none; }
+    .owl-hero-img.has-file { display: block; }
+    .float-card {
+      position: absolute; z-index: 3;
+      background: rgba(17, 24, 54, 0.82); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 14px; color: var(--text-soft);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-card);
+      animation: float 7s ease-in-out infinite;
+    }
+    .float-card .ic { color: var(--cyan); width: 26px; height: 26px; }
+    .float-card small { display: block; color: var(--muted); font-size: .72rem; }
+    .float-card strong { font-size: .95rem; color: var(--white); }
+    .fc-code { top: 6%; left: 2%; animation-delay: -1s; }
+    .fc-chart { top: 14%; right: 0; animation-delay: -3s; }
+    .fc-ui { bottom: 8%; right: 6%; animation-delay: -5s; }
+    .bar-mini { display: flex; gap: 4px; align-items: flex-end; height: 26px; margin-top: 8px; }
+    .bar-mini i { width: 7px; background: var(--grad); border-radius: 3px; display: block; }
+
+    /* =====================================================================
+       7. SERVICIOS
+       ===================================================================== */
+    .services { background: var(--bg-2); }
+    .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: transform .35s var(--ease), border-color .35s, box-shadow .35s, background .35s;
+    }
+    .service-card { padding: 28px 24px; display: flex; flex-direction: column; }
+    .service-card:hover { transform: translateY(-8px); border-color: var(--border-glow); box-shadow: var(--shadow-neon); background: var(--card-2); }
+    .service-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .service-icon {
+      width: 50px; height: 50px; border-radius: 14px; flex-shrink: 0;
+      display: grid; place-items: center; color: var(--white);
+      background: var(--grad); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+      transition: transform .35s var(--ease);
+    }
+    .service-icon .ic { width: 24px; height: 24px; }
+    .service-card:hover .service-icon { transform: scale(1.08) rotate(-4deg); }
+    .service-card h3 { font-size: 1.15rem; }
+    .service-card > p { font-size: .93rem; color: var(--muted); margin-bottom: 18px; }
+    .service-details { display: grid; gap: 8px; margin-bottom: 0; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .45s var(--ease), opacity .35s, margin .35s; }
+    .service-card.expanded .service-details { max-height: 260px; opacity: 1; margin-bottom: 18px; }
+    .service-details li { position: relative; padding-left: 22px; font-size: .9rem; color: var(--text-soft); }
+    .service-details li::before { content: ""; position: absolute; left: 0; top: .55em; width: 9px; height: 9px; border-radius: 3px; background: var(--grad); }
+    .service-more { margin-top: auto; align-self: flex-start; color: var(--blue-2); font-weight: 600; font-size: .92rem; display: inline-flex; align-items: center; gap: 6px; padding: 4px 0; transition: color .2s, gap .25s var(--ease); }
+    .service-more:hover { color: var(--cyan); gap: 10px; }
+    .service-more .chev { width: 16px; height: 16px; transition: transform .3s var(--ease); }
+    .service-card.expanded .service-more .chev { transform: rotate(90deg); }
+
+    /* =====================================================================
+       8. PROYECTOS (SIMULADOR)
+       ===================================================================== */
+    .projects-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+    .project-card {
+      display: flex; flex-direction: column; overflow: hidden; cursor: pointer;
+      text-align: left; padding: 0; color: inherit; width: 100%;
+    }
+    .project-card:hover { transform: translateY(-8px); border-color: var(--border-glow); box-shadow: var(--shadow-neon); }
+    .project-thumb {
+      position: relative; height: 170px; overflow: hidden;
+      background: linear-gradient(160deg, #0d1a40, #0a1230);
+      border-bottom: 1px solid var(--border);
+    }
+    .project-thumb .mock { position: absolute; inset: 14px 14px 0; border-radius: 12px 12px 0 0; background: #0f1a3d; border: 1px solid var(--border); border-bottom: none; overflow: hidden; transition: transform .5s var(--ease); }
+    .project-card:hover .mock { transform: translateY(-6px) scale(1.02); }
+    .mock-bar { height: 16px; background: #15214a; display: flex; gap: 4px; align-items: center; padding: 0 7px; }
+    .mock-bar i { width: 6px; height: 6px; border-radius: 50%; background: #3a4a8a; }
+    .mock-body { padding: 10px; display: grid; gap: 7px; }
+    .mock-line { height: 7px; border-radius: 4px; background: #24337a; }
+    .mock-line.c { background: var(--grad); width: 60%; }
+    .mock-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .mock-grid i { height: 38px; border-radius: 6px; background: #1a2a63; }
+    .mock-grid i:first-child { background: linear-gradient(135deg, #2563eb, #06b6d4); opacity: .8; }
+    .project-body { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+    .project-body h3 { font-size: 1.08rem; margin-bottom: 6px; }
+    .project-body .tags { font-size: .8rem; color: var(--cyan); margin-bottom: 14px; font-weight: 600; }
+    .project-body p { font-size: .9rem; color: var(--muted); margin-bottom: 18px; flex: 1; }
+    .project-open { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--blue-2); font-size: .92rem; transition: gap .25s var(--ease), color .2s; }
+    .project-card:hover .project-open { color: var(--cyan); gap: 12px; }
+
+    /* =====================================================================
+       8-b. MODAL DEL SIMULADOR
+       ===================================================================== */
+    .modal {
+      position: fixed; inset: 0; z-index: 300;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      background: rgba(3, 6, 15, 0.8); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s;
+    }
+    .modal.open { opacity: 1; visibility: visible; }
+    .modal-box {
+      width: min(1040px, 100%); max-height: calc(100vh - 40px); overflow-y: auto;
+      background: var(--bg-2); border: 1px solid var(--border); border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      transform: translateY(24px) scale(.98); transition: transform .4s var(--ease);
+    }
+    .modal.open .modal-box { transform: none; }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 26px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg-2); z-index: 2; border-radius: 20px 20px 0 0; }
+    .modal-head h3 { font-size: 1.25rem; }
+    .modal-head small { color: var(--cyan); font-weight: 600; }
+    .icon-btn { width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--border); display: grid; place-items: center; color: var(--text-soft); transition: all .2s; flex-shrink: 0; }
+    .icon-btn:hover { color: var(--white); border-color: var(--cyan); background: rgba(6, 182, 212, 0.1); }
+    .modal-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding: 18px 26px 0; }
+    .seg { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--card); border: 1px solid var(--border); }
+    .seg button { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 999px; color: var(--muted); font-weight: 600; font-size: .9rem; transition: all .25s var(--ease); }
+    .seg button:hover { color: var(--white); }
+    .seg button[aria-pressed="true"] { background: var(--grad); color: var(--white); box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4); }
+    .seg .ic { width: 17px; height: 17px; }
+
+    .preview-stage { padding: 22px 26px; display: flex; justify-content: center; background: #050815; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .preview-frame {
+      position: relative;
+      width: 100%; max-width: 100%; height: 540px;
+      display: flex; flex-direction: column;
+      background: #0b1230; border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+      box-shadow: var(--shadow-neon);
+      transition: width .5s var(--ease), height .5s var(--ease), border-radius .5s var(--ease);
+    }
+    .preview-frame.is-mobile {
+      width: min(340px, 100%, calc(min(700px, 78vh) * 9 / 19));
+      height: min(700px, 78vh);
+      border-radius: 46px; border: 10px solid #0b0f1e;
+      margin: 0 auto;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, .55), 0 0 0 1px #1e295d inset;
+    }
+    .preview-frame.is-mobile::before {
+      content: ""; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+      width: 96px; height: 24px; border-radius: 14px; background: #000; z-index: 10;
+    }
+    .browser-bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px; background: #0c1433; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .browser-bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+    .browser-bar i:nth-child(2) { background: #febc2e; }
+    .browser-bar i:nth-child(3) { background: #28c840; }
+    .browser-bar span { margin-left: 10px; font-size: .78rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .preview-frame.is-mobile .browser-bar { display: none; }
+    .preview { flex: 1; min-height: 0; display: flex; flex-direction: column; container-type: inline-size; background: #0b1230; overflow: hidden; }
+
+    .modal-info { display: grid; grid-template-columns: 1.2fr 1fr; gap: 26px; padding: 24px 26px 28px; align-items: start; }
+    .modal-info h4 { font-size: 1.05rem; margin-bottom: 10px; }
+    .modal-info p { color: var(--muted); font-size: .95rem; margin-bottom: 14px; }
+    .modal-info ul { display: grid; gap: 9px; }
+    .modal-info li { position: relative; padding-left: 24px; color: var(--text-soft); font-size: .92rem; }
+    .modal-info li::before { content: "✓"; position: absolute; left: 0; color: var(--cyan); font-weight: 800; }
+    .modal-cta { display: flex; flex-direction: column; gap: 12px; padding: 22px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); }
+    .modal-cta p { font-size: .9rem; color: var(--muted); margin: 0; }
+
+    /* =====================================================================
+       8-c. SOFTWARE SIMULADO (interfaces independientes de Intelia)
+       Cada proyecto define sus propias variables de color (.t-dash, .t-app, .t-shop, .t-land)
+       ===================================================================== */
+    .sim {
+      flex: 1; min-height: 0;
+      display: flex; flex-direction: column;
+      background: var(--sim-bg); color: var(--sim-ink);
+      font-size: .92rem;
+    }
+    .sim.t-dash { --sim-bg: #eef2f8; --sim-nav: #0f172a; --sim-nav-text: #e2e8f0; --sim-ink: #0f172a; --sim-muted: #64748b; --sim-accent: #4f46e5; --sim-line: #1e293b; --sim-card: #ffffff; --sim-line2: #e2e8f0; }
+    .sim.t-app  { --sim-bg: #fff7ed; --sim-nav: #ffffff; --sim-nav-text: #1c1917; --sim-ink: #1c1917; --sim-muted: #78716c; --sim-accent: #ea580c; --sim-line: #fed7aa; --sim-card: #ffffff; --sim-line2: #fde7cf; }
+    .sim.t-shop { --sim-bg: #ffffff; --sim-nav: #ffffff; --sim-nav-text: #111111; --sim-ink: #111111; --sim-muted: #6b7280; --sim-accent: #111111; --sim-line: #e5e7eb; --sim-card: #ffffff; --sim-line2: #e5e7eb; }
+    .sim.t-land { --sim-bg: #f8fbff; --sim-nav: #ffffff; --sim-nav-text: #0b1b3a; --sim-ink: #0b1b3a; --sim-muted: #5b6b8c; --sim-accent: #2563eb; --sim-line: #dbe7ff; --sim-card: #ffffff; --sim-line2: #e3ecfb; }
+
+    .status-bar {
+      display: none; justify-content: space-between; align-items: center;
+      padding: 16px 22px 4px; font-size: .7rem; font-weight: 700;
+      background: var(--sim-nav); color: var(--sim-nav-text); flex-shrink: 0;
+    }
+    .preview-frame.is-mobile .status-bar { display: flex; }
+
+    .sim-nav {
+      flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 12px 16px; background: var(--sim-nav); color: var(--sim-nav-text);
+      border-bottom: 1px solid var(--sim-line2);
+    }
+    .sim-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; white-space: nowrap; color: var(--sim-nav-text); }
+    .sim-logo { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: var(--sim-accent); color: #fff; font-size: .85rem; font-weight: 800; flex-shrink: 0; }
+    .sim-links { display: flex; align-items: center; gap: 14px; font-size: .8rem; color: var(--sim-muted); font-weight: 600; }
+    .sim-links button:hover { color: var(--sim-accent); }
+    .sim-cart {
+      display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px;
+      background: var(--sim-accent); color: #fff; font-weight: 700; font-size: .8rem; white-space: nowrap;
+      transition: transform .2s;
+    }
+    .sim-cart:hover { transform: translateY(-2px); }
+    .sim-scroll { position: relative; flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: 16px; }
+    .sim-cta { flex-shrink: 0; padding: 12px 14px; background: var(--sim-nav); border-top: 1px solid var(--sim-line2); }
+    .sim-cta a {
+      display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+      padding: 13px 14px; border-radius: 12px;
+      background: #25d366; color: #04210f; font-weight: 800; font-size: .95rem; text-align: center;
+      box-shadow: 0 8px 20px rgba(37, 211, 102, .4);
+      animation: simPulse 2.6s infinite;
+      transition: transform .2s;
+    }
+    .sim-cta a:hover { transform: translateY(-2px); }
+    .sim-cta .ic { width: 18px; height: 18px; }
+    @keyframes simPulse {
+      0%, 100% { box-shadow: 0 8px 20px rgba(37, 211, 102, .4); }
+      50% { box-shadow: 0 8px 30px rgba(37, 211, 102, .75); }
+    }
+    @keyframes simFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    .sim button:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ---- Proyecto 1: Dashboard administrativo ---- */
+    .d-tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+    .d-tabs::-webkit-scrollbar { display: none; }
+    .d-tabs button { padding: 7px 12px; border-radius: 8px; color: #94a3b8; font-weight: 600; font-size: .82rem; white-space: nowrap; transition: all .2s; }
+    .d-tabs button:hover { color: #fff; background: rgba(255, 255, 255, .06); }
+    .d-tabs button.on { background: var(--sim-accent); color: #fff; }
+    .d-user { width: 30px; height: 30px; border-radius: 50%; background: #334155; display: grid; place-items: center; font-size: .72rem; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .d-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+    .d-kpi { background: var(--sim-card); border: 1px solid var(--sim-line2); border-radius: 12px; padding: 14px; box-shadow: 0 1px 2px rgba(15, 23, 42, .05); }
+    .d-kpi small { display: block; color: var(--sim-muted); font-size: .74rem; font-weight: 600; }
+    .d-kpi strong { display: block; font-size: 1.3rem; margin: 4px 0 2px; color: var(--sim-ink); }
+    .d-kpi em { font-style: normal; font-size: .74rem; font-weight: 700; color: #16a34a; }
+    .d-kpi em.down { color: #dc2626; }
+    .d-grid2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .d-card { background: var(--sim-card); border: 1px solid var(--sim-line2); border-radius: 12px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 2px rgba(15, 23, 42, .05); }
+    .d-grid2 .d-card { margin-bottom: 0; }
+    .d-card-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+    .d-card-head strong { font-size: .95rem; color: var(--sim-ink); }
+    .d-chart { height: 160px; display: flex; align-items: flex-end; gap: 6px; }
+    .d-chart i { flex: 1; min-width: 0; border-radius: 5px 5px 2px 2px; background: linear-gradient(180deg, #6366f1, #4f46e5); transition: height .6s var(--ease); }
+    .d-chart i:hover { background: linear-gradient(180deg, #22d3ee, #0891b2); }
+    .d-months { display: flex; gap: 6px; margin-top: 6px; font-size: .66rem; color: var(--sim-muted); }
+    .d-months span { flex: 1; text-align: center; min-width: 0; overflow: hidden; }
+    .d-prog { margin-bottom: 12px; }
+    .d-prog-top { display: flex; justify-content: space-between; font-size: .8rem; margin-bottom: 6px; color: var(--sim-ink); font-weight: 600; }
+    .d-prog-top span { color: var(--sim-muted); font-weight: 500; }
+    .d-prog-bar { height: 8px; border-radius: 999px; background: var(--sim-line2); overflow: hidden; }
+    .d-prog-bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #4f46e5, #06b6d4); }
+    .d-btn { padding: 8px 12px; border-radius: 8px; font-size: .78rem; font-weight: 700; background: var(--sim-accent); color: #fff; transition: filter .2s, transform .2s; white-space: nowrap; }
+    .d-btn:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+    .d-btn-ghost { background: transparent; color: var(--sim-ink); border: 1px solid var(--sim-line2); }
+    .d-btn-ghost:hover:not(:disabled) { border-color: var(--sim-accent); color: var(--sim-accent); }
+    .d-btn-danger { background: #fee2e2; color: #991b1b; }
+    .d-btn-danger:hover:not(:disabled) { background: #fecaca; }
+    .d-btn-sm { padding: 5px 9px; font-size: .72rem; }
+    .d-tablewrap { overflow-x: auto; }
+    .d-table { width: 100%; border-collapse: collapse; font-size: .8rem; min-width: 440px; }
+    .d-table th { text-align: left; color: var(--sim-muted); font-weight: 600; padding: 8px 6px; border-bottom: 1px solid var(--sim-line2); font-size: .74rem; white-space: nowrap; }
+    .d-table td { padding: 10px 6px; border-bottom: 1px solid var(--sim-line2); color: var(--sim-ink); vertical-align: middle; white-space: nowrap; }
+    .d-table tbody tr:hover td { background: rgba(79, 70, 229, .05); }
+    .d-table td .d-btn { margin-left: 4px; }
+    .d-av { width: 26px; height: 26px; border-radius: 50%; background: #e0e7ff; color: #3730a3; display: inline-grid; place-items: center; font-size: .66rem; font-weight: 800; margin-right: 8px; vertical-align: middle; }
+    .badge { display: inline-block; padding: 3px 9px; border-radius: 999px; font-size: .7rem; font-weight: 700; white-space: nowrap; }
+    .b-ok { background: #dcfce7; color: #166534; }
+    .b-warn { background: #fef9c3; color: #854d0e; }
+    .b-off { background: #fee2e2; color: #991b1b; }
+    .b-info { background: #e0e7ff; color: #3730a3; }
+    .d-toolbar { display: flex; gap: 10px; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+    .d-search { flex: 1; min-width: 160px; padding: 9px 12px; border-radius: 9px; border: 1px solid var(--sim-line2); background: #f8fafc; color: var(--sim-ink); font-size: .85rem; }
+    .d-search:focus { outline: none; border-color: var(--sim-accent); box-shadow: 0 0 0 3px rgba(79, 70, 229, .15); }
+    .d-foot { font-size: .8rem; color: var(--sim-muted); margin-top: 4px; }
+    .d-foot b { color: var(--sim-ink); }
+
+    /* ---- Proyecto 2: App de hamburguesas / delivery ---- */
+    .a-hero { background: linear-gradient(135deg, #ea580c, #f97316); color: #fff; border-radius: 16px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 10px 22px rgba(234, 88, 12, .25); }
+    .a-hero small { opacity: .85; font-size: .74rem; }
+    .a-hero strong { display: block; font-size: 1rem; }
+    .a-cats { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 12px; scrollbar-width: none; }
+    .a-cats::-webkit-scrollbar { display: none; }
+    .a-cat { padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--sim-line); color: var(--sim-muted); font-weight: 700; font-size: .8rem; white-space: nowrap; transition: all .2s; }
+    .a-cat:hover { color: var(--sim-ink); border-color: var(--sim-accent); }
+    .a-cat.on { background: var(--sim-accent); border-color: var(--sim-accent); color: #fff; }
+    .a-list { display: grid; gap: 10px; }
+    .a-item { display: flex; gap: 12px; align-items: center; background: var(--sim-card); border: 1px solid var(--sim-line2); border-radius: 14px; padding: 12px; transition: transform .25s var(--ease), box-shadow .25s; }
+    .a-item:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(234, 88, 12, .14); }
+    .a-emoji { width: 62px; height: 62px; border-radius: 14px; background: #fff7ed; display: grid; place-items: center; font-size: 2rem; flex-shrink: 0; }
+    .a-info { flex: 1; min-width: 0; }
+    .a-info strong { display: block; font-size: .95rem; color: var(--sim-ink); }
+    .a-info small { display: block; color: var(--sim-muted); font-size: .76rem; line-height: 1.35; margin: 2px 0 8px; }
+    .a-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .a-price { font-weight: 800; color: var(--sim-ink); }
+    .a-add { padding: 7px 12px; border-radius: 9px; background: var(--sim-accent); color: #fff; font-weight: 700; font-size: .78rem; white-space: nowrap; transition: transform .2s, filter .2s, background .2s; }
+    .a-add:hover { transform: translateY(-1px); filter: brightness(1.08); }
+    .a-add.flash { background: #16a34a; }
+    .a-cartpanel { margin-top: 14px; background: var(--sim-card); border: 1px solid var(--sim-line2); border-radius: 16px; padding: 16px; box-shadow: 0 10px 24px rgba(0, 0, 0, .06); }
+    .a-cartpanel h4 { font-size: 1rem; margin-bottom: 10px; color: var(--sim-ink); }
+    .a-line { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px dashed var(--sim-line2); font-size: .86rem; color: var(--sim-ink); }
+    .a-line > span:first-child { flex: 1; min-width: 0; }
+    .a-qty { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
+    .a-qty button { width: 26px; height: 26px; border-radius: 8px; background: #fff7ed; color: var(--sim-accent); font-weight: 800; border: 1px solid var(--sim-line); transition: all .2s; }
+    .a-qty button:hover { background: var(--sim-accent); color: #fff; }
+    .a-total { display: flex; justify-content: space-between; font-weight: 800; margin: 12px 0; color: var(--sim-ink); }
+    .a-confirm { width: 100%; padding: 13px; border-radius: 12px; background: var(--sim-ink); color: #fff; font-weight: 800; transition: transform .2s, filter .2s; }
+    .a-confirm:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.2); }
+    .a-ok { text-align: center; padding: 14px 8px; color: #166534; font-weight: 800; }
+    .a-ok small { display: block; color: var(--sim-muted); font-weight: 500; margin-top: 4px; }
+    .a-empty { color: var(--sim-muted); font-size: .85rem; text-align: center; padding: 10px; }
+
+    /* ---- Proyecto 3: E-commerce ---- */
+    .s-page { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; }
+    .s-crumb { font-size: .74rem; color: var(--sim-muted); margin-bottom: 10px; }
+    .s-main { height: 300px; border-radius: 16px; display: grid; place-items: center; font-size: 7rem; border: 1px solid var(--sim-line2); transition: background .4s, transform .4s var(--ease); }
+    .s-main:hover { transform: scale(1.02); }
+    .s-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+    .s-thumb { height: 78px; border-radius: 12px; display: grid; place-items: center; font-size: 2rem; border: 2px solid transparent; transition: border-color .2s, transform .2s; }
+    .s-thumb:hover { transform: translateY(-2px); }
+    .s-thumb[aria-pressed="true"] { border-color: #111; }
+    .s-name { font-size: 1.25rem; font-weight: 800; color: var(--sim-ink); line-height: 1.2; }
+    .s-rating { font-size: .8rem; color: var(--sim-muted); margin: 6px 0 10px; }
+    .s-rating b { color: #f59e0b; letter-spacing: 1px; }
+    .s-price { font-size: 1.5rem; font-weight: 800; color: var(--sim-ink); margin-bottom: 6px; }
+    .s-label { font-size: .8rem; font-weight: 700; color: var(--sim-ink); margin: 14px 0 8px; display: flex; justify-content: space-between; }
+    .s-label span { color: var(--sim-muted); font-weight: 500; }
+    .s-colors { display: flex; gap: 10px; }
+    .s-color { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px #d1d5db; transition: transform .2s; }
+    .s-color:hover { transform: scale(1.1); }
+    .s-color[aria-pressed="true"] { box-shadow: 0 0 0 2px #111; }
+    .s-sizes { display: flex; flex-wrap: wrap; gap: 8px; }
+    .s-size { min-width: 44px; height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid #d1d5db; font-weight: 700; font-size: .82rem; color: var(--sim-ink); transition: all .2s; background: #fff; }
+    .s-size:hover { border-color: #111; }
+    .s-size[aria-pressed="true"] { background: #111; color: #fff; border-color: #111; }
+    .s-qty { display: inline-flex; align-items: center; border: 1px solid #d1d5db; border-radius: 10px; overflow: hidden; }
+    .s-qty button { width: 38px; height: 40px; font-weight: 700; color: var(--sim-ink); }
+    .s-qty button:hover { background: #f3f4f6; }
+    .s-qty span { min-width: 34px; text-align: center; font-weight: 700; color: var(--sim-ink); }
+    .s-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+    .s-btn { padding: 13px 10px; border-radius: 12px; font-weight: 800; font-size: .86rem; transition: transform .2s, filter .2s, background .2s; text-align: center; }
+    .s-btn:hover { transform: translateY(-2px); }
+    .s-btn-out { border: 1px solid #111; color: #111; background: #fff; }
+    .s-btn-out:hover { background: #f3f4f6; }
+    .s-btn-dark { background: #111; color: #fff; }
+    .s-btn-dark:hover { filter: brightness(1.25); }
+    .s-msg { font-size: .8rem; min-height: 1.2em; margin-top: 8px; font-weight: 700; color: #dc2626; }
+    .s-msg.ok { color: #16a34a; }
+    .s-pay { margin-top: 12px; padding: 16px; border: 1px solid #e5e7eb; border-radius: 14px; background: #fafafa; }
+    .s-methods { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .s-method { padding: 8px 12px; border-radius: 9px; border: 1px solid #d1d5db; font-size: .78rem; font-weight: 700; color: var(--sim-ink); background: #fff; transition: all .2s; }
+    .s-method[aria-pressed="true"] { border-color: #111; box-shadow: 0 0 0 1px #111 inset; }
+    .s-sum { display: flex; justify-content: space-between; font-size: .9rem; font-weight: 800; color: var(--sim-ink); margin-bottom: 10px; }
+    .s-ok { text-align: center; color: #166534; font-weight: 800; padding: 8px; }
+    .s-ok small { display: block; color: var(--sim-muted); font-weight: 500; margin-top: 4px; }
+    .s-related { margin-top: 22px; }
+    .s-related h5 { font-size: .85rem; color: var(--sim-ink); margin-bottom: 10px; }
+    .s-rel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .s-rel button { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 10px; text-align: left; transition: transform .2s, border-color .2s; }
+    .s-rel button:hover { transform: translateY(-3px); border-color: #111; }
+    .s-rel button[aria-pressed="true"] { border-color: #111; box-shadow: 0 0 0 1px #111 inset; }
+    .s-rel em { display: block; font-size: 1.6rem; font-style: normal; text-align: center; }
+    .s-rel small { display: block; font-size: .72rem; font-weight: 700; color: var(--sim-ink); margin-top: 4px; }
+    .s-rel span { display: block; font-size: .7rem; color: var(--sim-muted); }
+
+    /* ---- Proyecto 4: Landing page ---- */
+    .l-hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; align-items: center; padding: 14px 0 26px; }
+    .l-badge { display: inline-block; padding: 5px 11px; border-radius: 999px; background: #e0ecff; color: #1d4ed8; font-size: .72rem; font-weight: 700; margin-bottom: 12px; }
+    .l-hero h2 { font-size: 1.7rem; line-height: 1.15; color: var(--sim-ink); margin-bottom: 10px; font-weight: 800; }
+    .l-hero h2 span { color: var(--sim-accent); }
+    .l-hero p { color: var(--sim-muted); font-size: .9rem; margin-bottom: 16px; }
+    .l-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+    .l-btn { padding: 12px 18px; border-radius: 11px; background: var(--sim-accent); color: #fff; font-weight: 800; font-size: .85rem; box-shadow: 0 8px 18px rgba(37, 99, 235, .3); transition: transform .2s, box-shadow .2s; }
+    .l-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(37, 99, 235, .4); }
+    .l-btn-ghost { padding: 12px 18px; border-radius: 11px; border: 1px solid var(--sim-line); color: var(--sim-ink); font-weight: 700; font-size: .85rem; background: #fff; transition: border-color .2s, color .2s; }
+    .l-btn-ghost:hover { border-color: var(--sim-accent); color: var(--sim-accent); }
+    .l-trust { font-size: .74rem; color: var(--sim-muted); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .l-trust span { padding: 3px 9px; border-radius: 999px; background: #fff; border: 1px solid var(--sim-line); color: var(--sim-ink); font-weight: 600; }
+    .l-mock { background: #fff; border: 1px solid var(--sim-line); border-radius: 16px; padding: 16px; box-shadow: 0 18px 40px rgba(37, 99, 235, .15); animation: simFloat 6s ease-in-out infinite; }
+    .l-mock-top { display: flex; justify-content: space-between; font-size: .74rem; color: var(--sim-muted); margin-bottom: 10px; }
+    .l-mock-top b { color: #16a34a; }
+    .l-mock-num { font-size: 1.6rem; font-weight: 800; color: var(--sim-ink); }
+    .l-mock-bars { display: flex; align-items: flex-end; gap: 6px; height: 90px; margin: 12px 0; }
+    .l-mock-bars i { flex: 1; border-radius: 6px 6px 2px 2px; background: linear-gradient(180deg, #60a5fa, #2563eb); }
+    .l-mock-leads { display: flex; justify-content: space-between; font-size: .74rem; color: var(--sim-muted); padding-top: 10px; border-top: 1px solid var(--sim-line2); }
+    .l-sec { padding: 18px 0; }
+    .l-sec h3 { font-size: 1.2rem; color: var(--sim-ink); text-align: center; margin-bottom: 4px; font-weight: 800; }
+    .l-sec > p { text-align: center; color: var(--sim-muted); font-size: .85rem; margin-bottom: 16px; }
+    .l-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .l-card { background: #fff; border: 1px solid var(--sim-line); border-radius: 14px; padding: 16px; transition: transform .25s var(--ease), box-shadow .25s; }
+    .l-card:hover { transform: translateY(-4px); box-shadow: 0 12px 26px rgba(37, 99, 235, .12); }
+    .l-card em { font-style: normal; font-size: 1.4rem; display: block; margin-bottom: 8px; }
+    .l-card strong { font-size: .9rem; color: var(--sim-ink); display: block; margin-bottom: 4px; }
+    .l-card small { color: var(--sim-muted); font-size: .8rem; line-height: 1.4; }
+    .l-quote { margin-top: 14px; background: #0b1b3a; color: #fff; border-radius: 16px; padding: 20px; text-align: center; }
+    .l-quote p { color: #dbe7ff; font-size: .92rem; font-style: italic; margin-bottom: 10px; }
+    .l-quote small { color: #93c5fd; font-weight: 700; }
+    .l-stars { color: #fbbf24; letter-spacing: 2px; margin-bottom: 6px; }
+    .l-toggle { display: flex; justify-content: center; margin-bottom: 14px; }
+    .l-toggle div { display: inline-flex; background: #fff; border: 1px solid var(--sim-line); border-radius: 999px; padding: 4px; }
+    .l-toggle button { padding: 7px 14px; border-radius: 999px; font-size: .78rem; font-weight: 700; color: var(--sim-muted); transition: all .2s; }
+    .l-toggle button[aria-pressed="true"] { background: var(--sim-accent); color: #fff; }
+    .l-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .l-plan { background: #fff; border: 1px solid var(--sim-line); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; transition: transform .25s var(--ease), border-color .25s, box-shadow .25s; }
+    .l-plan:hover { transform: translateY(-4px); }
+    .l-plan.hot { border-color: var(--sim-accent); box-shadow: 0 14px 30px rgba(37, 99, 235, .18); }
+    .l-plan.sel { border-color: var(--sim-accent); }
+    .l-plan .tag-pop { align-self: flex-start; font-size: .66rem; font-weight: 800; background: var(--sim-accent); color: #fff; padding: 3px 8px; border-radius: 999px; margin-bottom: 8px; }
+    .l-plan h4 { font-size: 1rem; color: var(--sim-ink); }
+    .l-plan .price { font-size: 1.5rem; font-weight: 800; color: var(--sim-ink); margin: 6px 0 2px; }
+    .l-plan .price small { font-size: .72rem; color: var(--sim-muted); font-weight: 600; }
+    .l-plan ul { display: grid; gap: 6px; margin: 10px 0 14px; font-size: .8rem; color: var(--sim-muted); flex: 1; }
+    .l-plan ul li::before { content: "✓ "; color: var(--sim-accent); font-weight: 800; }
+    .l-plan button { padding: 10px; border-radius: 10px; font-weight: 800; font-size: .8rem; border: 1px solid var(--sim-accent); color: var(--sim-accent); background: #fff; transition: all .2s; }
+    .l-plan button:hover, .l-plan.sel button { background: var(--sim-accent); color: #fff; }
+    .l-form { margin-top: 18px; background: #fff; border: 1px solid var(--sim-line); border-radius: 16px; padding: 18px; }
+    .l-form h4 { font-size: 1.05rem; color: var(--sim-ink); margin-bottom: 12px; text-align: center; }
+    .l-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .l-field { display: grid; gap: 5px; margin-bottom: 10px; }
+    .l-field label { font-size: .74rem; font-weight: 700; color: var(--sim-ink); }
+    .l-field input, .l-field select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--sim-line); background: #f8fbff; color: var(--sim-ink); font-size: .85rem; transition: border-color .2s, box-shadow .2s; }
+    .l-field input:focus, .l-field select:focus { outline: none; border-color: var(--sim-accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, .15); }
+    .l-submit { width: 100%; padding: 13px; border-radius: 12px; background: var(--sim-accent); color: #fff; font-weight: 800; transition: transform .2s, box-shadow .2s; box-shadow: 0 8px 18px rgba(37, 99, 235, .3); }
+    .l-submit:hover { transform: translateY(-2px); }
+    .l-msg { min-height: 1.2em; font-size: .8rem; margin-top: 8px; text-align: center; font-weight: 600; }
+    .l-msg.err { color: #dc2626; }
+    .l-msg.ok { color: #16a34a; }
+    .l-foot { text-align: center; color: var(--sim-muted); font-size: .72rem; padding: 16px 0 4px; }
+
+    /* ---- Adaptación interna de cada simulación (container queries) ---- */
+    @container (max-width: 560px) {
+      .sim-name, .sim-links { display: none; }
+      .sim-nav { padding: 10px 12px; }
+      .sim-scroll { padding: 12px; }
+      .d-kpis { grid-template-columns: repeat(2, 1fr); }
+      .d-grid2 { grid-template-columns: 1fr; }
+      .d-tabs button { padding: 6px 9px; }
+      .a-emoji { width: 54px; height: 54px; font-size: 1.7rem; }
+      .s-page { grid-template-columns: 1fr; }
+      .s-main { height: 240px; font-size: 5.5rem; }
+      .l-hero { grid-template-columns: 1fr; }
+      .l-hero h2 { font-size: 1.4rem; }
+      .l-cards, .l-plans { grid-template-columns: 1fr; }
+      .l-grid2 { grid-template-columns: 1fr; }
+      .s-rel { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* =====================================================================
+       9. COTIZADOR EXPRESS
+       ===================================================================== */
+    .quote { background: var(--bg-2); }
+    .quote-wrap { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; align-items: start; }
+    .quote-aside h2 { font-size: clamp(1.8rem, 3.6vw, 2.5rem); margin: 14px 0 12px; }
+    .quote-aside > p { color: var(--muted); margin-bottom: 26px; }
+    .quote-points { display: grid; gap: 14px; }
+    .quote-points li { display: flex; gap: 12px; align-items: flex-start; color: var(--text-soft); font-size: .95rem; }
+    .quote-points .ic { color: var(--cyan); margin-top: 2px; }
+    .quote-box { padding: 30px; border-radius: 20px; }
+    .progress { display: flex; gap: 10px; margin-bottom: 26px; }
+    .progress span { flex: 1; height: 6px; border-radius: 999px; background: var(--border); transition: background .4s; }
+    .progress span.done { background: var(--grad); }
+    .step-label { font-size: .85rem; color: var(--cyan); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 6px; }
+    .step { display: none; }
+    .step.active { display: block; animation: fadeUp .45s var(--ease); }
+    .step h3 { font-size: 1.3rem; margin-bottom: 6px; }
+    .step > p { color: var(--muted); font-size: .94rem; margin-bottom: 22px; }
+    .choice-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+    .choice {
+      padding: 20px 18px; border-radius: var(--radius-sm); text-align: left;
+      background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
+      display: grid; gap: 6px; transition: transform .25s var(--ease), border-color .25s, background .25s, box-shadow .25s;
+    }
+    .choice .ic { color: var(--cyan); width: 26px; height: 26px; }
+    .choice strong { font-size: .98rem; }
+    .choice small { color: var(--muted); font-size: .83rem; }
+    .choice:hover { transform: translateY(-4px); border-color: var(--border-glow); }
+    .choice[aria-pressed="true"] { border-color: var(--cyan); background: rgba(6, 182, 212, .08); box-shadow: 0 0 0 1px var(--cyan) inset, 0 10px 26px rgba(6, 182, 212, .14); }
+    .field { display: grid; gap: 8px; margin-bottom: 18px; }
+    .field label { font-weight: 600; font-size: .92rem; color: var(--text-soft); }
+    .field input, .field select {
+      width: 100%; padding: 13px 15px; border-radius: var(--radius-sm);
+      background: #0b1230; border: 1px solid var(--border); color: var(--white);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .field select option { background: #0b1230; }
+    .field input::placeholder { color: #55628a; }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(6, 182, 212, .14); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .summary { display: grid; gap: 10px; padding: 18px; border-radius: var(--radius-sm); background: rgba(37, 99, 235, .08); border: 1px dashed var(--border); margin-bottom: 18px; }
+    .summary div { display: flex; justify-content: space-between; gap: 14px; font-size: .92rem; }
+    .summary span { color: var(--muted); }
+    .summary b { color: var(--white); text-align: right; }
+    .error-msg { min-height: 1.3em; color: #ff8a8a; font-size: .86rem; margin-top: 12px; }
+    .quote-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 24px; }
+
+    /* =====================================================================
+       10. CHATBOT FLOTANTE (Intelia)
+       ===================================================================== */
+    .chat-fab {
+      position: fixed; right: 22px; bottom: 22px; z-index: 210;
+      width: 70px; height: 70px; border-radius: 50%;
+      background: var(--card); border: 2px solid var(--cyan);
+      display: grid; place-items: center; padding: 6px;
+      box-shadow: 0 0 0 0 rgba(6, 182, 212, .6), 0 12px 30px rgba(0, 0, 0, .5);
+      animation: ringPulse 2.6s infinite;
+      transition: transform .3s var(--ease);
+    }
+    .chat-fab:hover { transform: scale(1.08); }
+    .chat-fab svg { width: 100%; height: 100%; }
+    .chat-fab .badge-new { position: absolute; top: -2px; right: -2px; width: 14px; height: 14px; border-radius: 50%; background: var(--green); border: 2px solid var(--bg); }
+    .chat-panel {
+      position: fixed; right: 22px; bottom: 104px; z-index: 220;
+      width: 380px; height: 560px; max-height: calc(100vh - 130px);
+      display: flex; flex-direction: column;
+      background: var(--bg-2); border: 1px solid var(--border); border-radius: 18px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, .6);
+      opacity: 0; transform: translateY(20px) scale(.96); transform-origin: bottom right; pointer-events: none;
+      transition: opacity .3s, transform .4s var(--ease);
+    }
+    .chat-panel.open { opacity: 1; transform: none; pointer-events: auto; }
+    .chat-head { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--border); background: linear-gradient(90deg, rgba(37, 99, 235, .2), transparent); border-radius: 18px 18px 0 0; }
+    .chat-head .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--card); border: 1px solid var(--border); padding: 4px; flex-shrink: 0; }
+    .chat-head .avatar svg { width: 100%; height: 100%; }
+    .chat-head strong { display: block; font-size: 1rem; }
+    .chat-head small { color: var(--green); font-size: .78rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .chat-head small::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+    .chat-head .icon-btn { margin-left: auto; width: 36px; height: 36px; }
+    .chat-log { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+    .msg { max-width: 84%; padding: 11px 15px; border-radius: 14px; font-size: .92rem; line-height: 1.45; animation: fadeUp .35s var(--ease); word-wrap: break-word; white-space: pre-line; }
+    .msg-bot { background: #15214a; border: 1px solid var(--border); color: var(--text-soft); border-bottom-left-radius: 4px; align-self: flex-start; }
+    .msg-user { background: var(--blue); color: var(--white); border-bottom-right-radius: 4px; align-self: flex-end; }
+    .msg-link { align-self: flex-start; max-width: 92%; }
+    .msg-link a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--green); color: #04210f; font-weight: 700; font-size: .86rem; transition: transform .25s var(--ease), box-shadow .25s; box-shadow: 0 6px 16px rgba(37, 211, 102, .3); }
+    .msg-link a:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(37, 211, 102, .45); }
+    .typing { align-self: flex-start; display: inline-flex; gap: 5px; padding: 13px 16px; background: #15214a; border: 1px solid var(--border); border-radius: 14px; border-bottom-left-radius: 4px; }
+    .typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); animation: blink 1.2s infinite; }
+    .typing i:nth-child(2) { animation-delay: .2s; }
+    .typing i:nth-child(3) { animation-delay: .4s; }
+    .chat-chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 18px 12px; }
+    .chat-chips:empty { display: none; }
+    .chip {
+      padding: 8px 13px; border-radius: 999px; font-size: .8rem; font-weight: 600;
+      border: 1px solid var(--border); color: var(--text-soft); background: rgba(255, 255, 255, .02);
+      transition: all .2s;
+    }
+    .chip:hover { border-color: var(--cyan); color: var(--white); background: rgba(6, 182, 212, .1); }
+    .chat-form { display: flex; gap: 10px; padding: 12px 14px; border-top: 1px solid var(--border); }
+    .chat-form input { flex: 1; min-width: 0; padding: 12px 14px; border-radius: 999px; background: #0b1230; border: 1px solid var(--border); color: var(--white); }
+    .chat-form input::placeholder { color: #55628a; }
+    .chat-form input:focus { outline: none; border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(6, 182, 212, .15); }
+    .chat-form input:disabled { opacity: .5; cursor: not-allowed; }
+    .chat-form button { width: 46px; height: 46px; border-radius: 50%; background: var(--blue); color: var(--white); display: grid; place-items: center; flex-shrink: 0; transition: background .2s, transform .2s; }
+    .chat-form button:hover { background: #1d4ed8; transform: scale(1.06); }
+    .chat-form button:disabled { opacity: .4; pointer-events: none; }
+    .chat-form button .ic { width: 19px; height: 19px; }
+
+    /* =====================================================================
+       11. WHATSAPP FLOTANTE (secundario)
+       ===================================================================== */
+    .wa-float {
+      position: fixed; left: 22px; bottom: 22px; z-index: 200;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--green); color: #04210f;
+      display: grid; place-items: center;
+      box-shadow: 0 10px 26px rgba(37, 211, 102, .42);
+      transition: transform .3s var(--ease);
+    }
+    .wa-float:hover { transform: scale(1.08); }
+    .wa-float .ic { width: 30px; height: 30px; }
+
+    /* =====================================================================
+       12. FOOTER
+       ===================================================================== */
+    .footer { background: #050815; border-top: 1px solid var(--border); padding-top: 64px; }
+    .cta-banner {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      padding: 34px 40px; border-radius: 18px;
+      background: linear-gradient(120deg, #1d4ed8 0%, #2563eb 55%, #0891b2 100%);
+      box-shadow: 0 20px 50px rgba(37, 99, 235, .35);
+      position: relative; overflow: hidden;
+    }
+    .cta-banner::after { content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(255, 255, 255, .08); }
+    .cta-banner h3 { font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom: 6px; position: relative; z-index: 1; }
+    .cta-banner p { color: rgba(255, 255, 255, .85); position: relative; z-index: 1; }
+    .cta-banner .btn { position: relative; z-index: 1; background: var(--white); color: #04210f; box-shadow: 0 10px 24px rgba(0, 0, 0, .25); }
+    .cta-banner .btn:hover { background: #e8fff1; }
+    .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; padding: 56px 0 40px; }
+    .footer-brand p { color: var(--muted); font-size: .93rem; margin: 16px 0 20px; max-width: 320px; }
+    .footer h4 { font-size: 1rem; margin-bottom: 16px; }
+    .footer-links { display: grid; gap: 11px; }
+    .footer-links a { color: var(--muted); font-size: .93rem; transition: color .2s, padding .25s var(--ease); }
+    .footer-links a:hover { color: var(--cyan); padding-left: 4px; }
+    .contact-line { display: inline-flex; align-items: center; gap: 10px; color: var(--text-soft); font-weight: 600; font-size: .95rem; transition: color .2s; }
+    .contact-line:hover { color: var(--green); }
+    .contact-line .ic { color: var(--green); }
+    .socials { display: flex; gap: 12px; margin-top: 18px; }
+    .social {
+      position: relative; width: 46px; height: 46px; border-radius: 14px;
+      display: grid; place-items: center; color: var(--text-soft);
+      border: 1px solid var(--border); background: rgba(255, 255, 255, .02);
+      transition: transform .3s var(--ease), color .25s, border-color .25s, box-shadow .3s;
+    }
+    .social .ic { width: 20px; height: 20px; }
+    .social:hover { transform: translateY(-4px); color: var(--white); border-color: var(--cyan); box-shadow: 0 0 20px rgba(6, 182, 212, .3); }
+    .social.soon::after {
+      content: "Próximamente"; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translate(-50%, 4px);
+      white-space: nowrap; font-size: .7rem; font-weight: 600; background: var(--card); border: 1px solid var(--border);
+      padding: 4px 9px; border-radius: 7px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s;
+    }
+    .social.soon:hover::after, .social.soon:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+    .footer-bottom { border-top: 1px solid var(--border); padding: 22px 0 26px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: .86rem; color: var(--muted); }
+
+    /* =====================================================================
+       13. ANIMACIONES
+       ===================================================================== */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal[data-delay="1"] { transition-delay: .08s; }
+    .reveal[data-delay="2"] { transition-delay: .16s; }
+    .reveal[data-delay="3"] { transition-delay: .24s; }
+
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); opacity: .75; } 50% { transform: scale(1.06); opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    @keyframes blink { 0%, 80%, 100% { opacity: .25; } 40% { opacity: 1; } }
+    @keyframes ringPulse {
+      0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, .55), 0 12px 30px rgba(0, 0, 0, .5); }
+      70% { box-shadow: 0 0 0 16px rgba(6, 182, 212, 0), 0 12px 30px rgba(0, 0, 0, .5); }
+      100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0), 0 12px 30px rgba(0, 0, 0, .5); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* =====================================================================
+       14. RESPONSIVE
+       ===================================================================== */
+    @media (max-width: 1100px) {
+      .services-grid, .projects-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { gap: 22px; }
+    }
+
+    @media (max-width: 960px) {
+      section { padding: 72px 0; }
+      .nav-links, .nav-right .btn { display: none; }
+      .menu-btn { display: inline-flex; }
+      .mobile-menu { display: flex; }
+      .hero { min-height: auto; padding-bottom: 64px; }
+      .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 28px; }
+      .hero-sub { margin-inline: auto; }
+      .hero-actions { justify-content: center; }
+      .eyebrow { margin-inline: auto; }
+      .benefits { grid-template-columns: repeat(2, 1fr); row-gap: 20px; }
+      .benefit:nth-child(odd) { padding-left: 0; border-left: none; }
+      .benefit { justify-content: flex-start; text-align: left; }
+      .hero-visual { min-height: 380px; order: -1; }
+      .quote-wrap { grid-template-columns: 1fr; gap: 30px; }
+      .quote-aside { text-align: center; }
+      .quote-points { justify-items: start; text-align: left; max-width: 480px; margin: 0 auto; }
+      .modal-info { grid-template-columns: 1fr; }
+      .cta-banner { padding: 28px; }
+    }
+
+    @media (max-width: 640px) {
+      :root { --header-h: 66px; }
+      .brand { font-size: 1.2rem; }
+      .hero { padding-top: calc(var(--header-h) + 28px); }
+      .hero h1 { font-size: clamp(2.1rem, 9vw, 2.7rem); }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; }
+      .benefits { grid-template-columns: 1fr; }
+      .benefit, .benefit:nth-child(odd) { border-left: none; padding: 0; }
+      .hero-visual { min-height: 320px; }
+      .float-card { padding: 10px; }
+      .float-card strong { font-size: .8rem; }
+      .fc-code { left: 0; }
+      .fc-chart { right: -2%; }
+      .fc-ui { right: 0; bottom: 4%; }
+      .services-grid, .projects-grid { grid-template-columns: 1fr; }
+      .section-head-row { align-items: flex-start; }
+      .quote-box { padding: 22px 18px; }
+      .field-row { grid-template-columns: 1fr; }
+      .quote-nav .btn { flex: 1; }
+      .modal { padding: 0; align-items: flex-end; }
+      .modal-box { width: 100%; max-height: 94vh; border-radius: 20px 20px 0 0; }
+      .modal-head { border-radius: 20px 20px 0 0; padding: 18px 20px; }
+      .modal-toolbar { padding: 16px 20px 0; }
+      .preview-stage { padding: 16px 14px; }
+      .preview-frame:not(.is-mobile) { height: min(520px, 62vh); }
+      .modal-info { padding: 20px 20px 24px; }
+      .chat-panel { right: 10px; left: 10px; width: auto; bottom: 96px; height: min(560px, calc(100vh - 120px)); }
+      .chat-fab { right: 14px; bottom: 14px; width: 62px; height: 62px; }
+      .wa-float { left: 14px; bottom: 14px; width: 52px; height: 52px; }
+      .wa-float .ic { width: 26px; height: 26px; }
+      .cta-banner { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+      .cta-banner .btn { width: 100%; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; padding-top: 44px; }
+      .footer-bottom { justify-content: center; text-align: center; }
+    }
+
+    @media (max-width: 380px) {
+      .brand-name { font-size: 1.05rem; }
+      .btn { padding: 12px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================================
+       SÍMBOLOS SVG REUTILIZABLES (iconos y mascota del búho)
+       ===================================================================== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="gBody" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#3b82f6"/>
+        <stop offset="1" stop-color="#1e3a8a"/>
+      </linearGradient>
+      <linearGradient id="gEye" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#67e8f9"/>
+        <stop offset="1" stop-color="#06b6d4"/>
+      </linearGradient>
+      <linearGradient id="gAccent" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#2563eb"/>
+        <stop offset="1" stop-color="#06b6d4"/>
+      </linearGradient>
+
+      <!-- Búho tecnológico (mascota Intelia) -->
+      <symbol id="owl" viewBox="0 0 120 120">
+        <path d="M26 30 L40 12 L48 34 Z" fill="#1e40af"/>
+        <path d="M94 30 L80 12 L72 34 Z" fill="#1e40af"/>
+        <ellipse cx="60" cy="68" rx="40" ry="44" fill="url(#gBody)"/>
+        <ellipse cx="60" cy="82" rx="26" ry="24" fill="#0b1a4a" opacity=".45"/>
+        <circle cx="44" cy="54" r="17" fill="#0b1230" stroke="url(#gEye)" stroke-width="3"/>
+        <circle cx="76" cy="54" r="17" fill="#0b1230" stroke="url(#gEye)" stroke-width="3"/>
+        <circle cx="44" cy="54" r="7" fill="#22d3ee"/>
+        <circle cx="76" cy="54" r="7" fill="#22d3ee"/>
+        <circle cx="46" cy="52" r="2.2" fill="#ffffff"/>
+        <circle cx="78" cy="52" r="2.2" fill="#ffffff"/>
+        <path d="M55 66 L65 66 L60 77 Z" fill="#facc15"/>
+        <path d="M50 92 L60 100 L70 92" stroke="#22d3ee" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+
+      <!-- Iconos de trazo -->
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/><circle cx="12" cy="12" r="9.5"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5"/><circle cx="17" cy="9" r="2.8"/><path d="M16.5 14.6c2.6.2 4.5 2.1 5 4.9"/></symbol>
+      <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+      <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+      <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a4.5 4.5 0 0 1-.6-9 6 6 0 0 1 11.6 1.6A4 4 0 0 1 17 18z"/></symbol>
+      <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2.5 3.5h2.5l2.4 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.5l1.6-6.8H6.2"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-desk" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+      <symbol id="i-mobile" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+      <symbol id="i-send" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></symbol>
+      <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/><path d="M19 20a4 4 0 0 1-4 2h-2"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol>
+
+      <!-- Iconos de marca (relleno) -->
+      <symbol id="i-wa" viewBox="0 0 24 24"><path class="ic-fill" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm0 18.15h-.01a8.22 8.22 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.27 8.24zm4.52-6.17c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.17.25-.63.8-.77.97-.14.17-.29.19-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.66.31-.23.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.54.12.17 1.74 2.65 4.21 3.72.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.17.2-.58.2-1.07.14-1.17-.06-.11-.22-.17-.47-.29z"/></symbol>
+      <symbol id="i-fb" viewBox="0 0 24 24"><path class="ic-fill" d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.5 2.9h-2.3v7A10 10 0 0 0 22 12z"/></symbol>
+      <symbol id="i-ig" viewBox="0 0 24 24"><path class="ic-fill" d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- =====================================================================
+       HEADER / NAVBAR
+       ===================================================================== -->
+  <header class="header" id="header">
+    <nav class="container nav" aria-label="Navegación principal">
+      <a href="#inicio" class="brand" aria-label="INTELIA, ir al inicio">
+        <span class="brand-name">INTELIA</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#inicio" class="nav-link" data-section="inicio">Inicio</a></li>
+        <li><a href="#servicios" class="nav-link" data-section="servicios">Servicios</a></li>
+        <li><a href="#proyectos" class="nav-link" data-section="proyectos">Proyectos</a></li>
+        <li><a href="#cotizar" class="nav-link" data-section="cotizar">Cotizar</a></li>
+        <li><a href="#contacto" class="nav-link" data-section="contacto">Contacto</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <a href="https://wa.me/525611717050" class="btn btn-primary btn-sm" data-wa="Hola Intelia, quiero cotizar un proyecto." target="_blank" rel="noopener noreferrer">
+          <svg class="ic"><use href="#i-wa"/></svg>
+          Cotizar proyecto
+        </a>
+        <button class="menu-btn" id="menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+          <svg class="ic" id="menu-icon"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Menú móvil (drawer) -->
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Menú móvil">
+    <a href="#inicio" class="nav-link" data-section="inicio">Inicio</a>
+    <a href="#servicios" class="nav-link" data-section="servicios">Servicios</a>
+    <a href="#proyectos" class="nav-link" data-section="proyectos">Proyectos</a>
+    <a href="#cotizar" class="nav-link" data-section="cotizar">Cotizar</a>
+    <a href="#contacto" class="nav-link" data-section="contacto">Contacto</a>
+    <a href="https://wa.me/525611717050" class="btn btn-primary btn-block" data-wa="Hola Intelia, quiero cotizar un proyecto." target="_blank" rel="noopener noreferrer">
+      <svg class="ic"><use href="#i-wa"/></svg>
+      Cotizar proyecto
+    </a>
+  </nav>
+
+  <main>
+    <!-- =====================================================================
+         A + B. HERO
+         ===================================================================== -->
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <span class="eyebrow"><span class="dot"></span>Automatización · Apps · Web · Soluciones digitales</span>
+          <h1>Tecnología a tu medida,<span class="line-accent">sin complicarte.</span></h1>
+          <p class="hero-sub">Automatizamos procesos y creamos apps y páginas web personalizadas para tu negocio.</p>
+          <div class="hero-actions">
+            <a href="https://wa.me/525611717050" class="btn btn-primary" data-wa="Hola Intelia, quiero cotizar un proyecto." target="_blank" rel="noopener noreferrer">
+              <svg class="ic"><use href="#i-wa"/></svg>
+              Cotizar proyecto
+              <svg class="ic"><use href="#i-arrow"/></svg>
+            </a>
+            <a href="#servicios" class="btn btn-outline">
+              Ver servicios
+              <svg class="ic"><use href="#i-arrow"/></svg>
+            </a>
+          </div>
+
+          <ul class="benefits">
+            <li class="benefit">
+              <span class="benefit-icon"><svg class="ic"><use href="#i-check"/></svg></span>
+              <span>Soluciones<br>personalizadas</span>
+            </li>
+            <li class="benefit">
+              <span class="benefit-icon"><svg class="ic"><use href="#i-bolt"/></svg></span>
+              <span>Procesos<br>automatizados</span>
+            </li>
+            <li class="benefit">
+              <span class="benefit-icon"><svg class="ic"><use href="#i-chart"/></svg></span>
+              <span>Mayor<br>eficiencia</span>
+            </li>
+            <li class="benefit">
+              <span class="benefit-icon"><svg class="ic"><use href="#i-users"/></svg></span>
+              <span>Acompañamiento<br>continuo</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-glow" aria-hidden="true"></div>
+
+          <!-- Imagen opcional del búho: assets/buho.png. Si no existe, se muestra el SVG integrado. -->
+          <img class="owl-hero-img" id="owl-img" src="assets/buho.png" alt="Búho tecnológico, mascota de Intelia" width="360" height="360">
+          <svg class="owl-hero" id="owl-svg" viewBox="0 0 120 120" role="img" aria-label="Búho tecnológico, mascota de Intelia"><use href="#owl"/></svg>
+
+          <div class="float-card fc-code">
+            <svg class="ic"><use href="#i-code"/></svg>
+            <small>Desarrollo</small>
+            <strong>Web &amp; Apps</strong>
+          </div>
+          <div class="float-card fc-chart">
+            <svg class="ic"><use href="#i-chart"/></svg>
+            <small>Eficiencia</small>
+            <strong>+62% productividad</strong>
+            <div class="bar-mini"><i style="height:30%"></i><i style="height:55%"></i><i style="height:45%"></i><i style="height:80%"></i><i style="height:100%"></i></div>
+          </div>
+          <div class="float-card fc-ui">
+            <svg class="ic"><use href="#i-spark"/></svg>
+            <small>Automatización</small>
+            <strong>Procesos activos</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         C. NUESTROS SERVICIOS
+         ===================================================================== -->
+    <section class="services" id="servicios">
+      <div class="container">
+        <div class="section-head-row reveal">
+          <div>
+            <h2 class="section-title">Nuestros <span class="accent">Servicios</span></h2>
+            <p class="section-sub">Desde tu primera página web hasta sistemas que trabajan solos para tu negocio.</p>
+          </div>
+          <a href="#proyectos" class="link-arrow">Ver todos los proyectos <svg class="ic" style="width:16px;height:16px"><use href="#i-arrow"/></svg></a>
+        </div>
+
+        <div class="services-grid">
+          <article class="card service-card reveal" data-delay="0">
+            <div class="service-head">
+              <span class="service-icon"><svg class="ic"><use href="#i-code"/></svg></span>
+              <h3>Desarrollo Web</h3>
+            </div>
+            <p>Sitios web rápidos, modernos y optimizados para tu negocio.</p>
+            <ul class="service-details">
+              <li>Diseño responsivo para celular y PC</li>
+              <li>Optimización SEO y velocidad de carga</li>
+              <li>Panel administrador para editar contenido</li>
+            </ul>
+            <button class="service-more" aria-expanded="false">Ver más <svg class="ic chev"><use href="#i-chev"/></svg></button>
+          </article>
+
+          <article class="card service-card reveal" data-delay="1">
+            <div class="service-head">
+              <span class="service-icon"><svg class="ic"><use href="#i-phone"/></svg></span>
+              <h3>Apps a Medida</h3>
+            </div>
+            <p>Aplicaciones móviles y de escritorio según tus necesidades.</p>
+            <ul class="service-details">
+              <li>Apps nativas para iOS y Android</li>
+              <li>Aplicaciones de escritorio y paneles web</li>
+              <li>Integración con tus sistemas actuales</li>
+            </ul>
+            <button class="service-more" aria-expanded="false">Ver más <svg class="ic chev"><use href="#i-chev"/></svg></button>
+          </article>
+
+          <article class="card service-card reveal" data-delay="2">
+            <div class="service-head">
+              <span class="service-icon"><svg class="ic"><use href="#i-gear"/></svg></span>
+              <h3>Automatización de Procesos</h3>
+            </div>
+            <p>Conectamos tus procesos para ahorrar tiempo y evitar tareas repetitivas.</p>
+            <ul class="service-details">
+              <li>Flujos automáticos entre tus herramientas</li>
+              <li>Reportes y alertas sin intervención manual</li>
+              <li>Conexión de APIs y bases de datos</li>
+            </ul>
+            <button class="service-more" aria-expanded="false">Ver más <svg class="ic chev"><use href="#i-chev"/></svg></button>
+          </article>
+
+          <article class="card service-card reveal" data-delay="3">
+            <div class="service-head">
+              <span class="service-icon"><svg class="ic"><use href="#i-cloud"/></svg></span>
+              <h3>Soluciones Digitales en la Nube</h3>
+            </div>
+            <p>Integramos herramientas, bases de datos y servicios en la nube.</p>
+            <ul class="service-details">
+              <li>Despliegue y hospedaje en la nube</li>
+              <li>Bases de datos seguras y escalables</li>
+              <li>Respaldos y monitoreo continuo</li>
+            </ul>
+            <button class="service-more" aria-expanded="false">Ver más <svg class="ic chev"><use href="#i-chev"/></svg></button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         D. SIMULADOR INTERACTIVO DE PROYECTOS
+         ===================================================================== -->
+    <section id="proyectos">
+      <div class="container">
+        <div class="section-head-row reveal">
+          <div>
+            <h2 class="section-title">Proyectos <span class="accent">Recientes</span></h2>
+            <p class="section-sub">Haz clic en un proyecto para ver su simulación en escritorio o celular y pedir uno similar.</p>
+          </div>
+        </div>
+
+        <div class="projects-grid">
+          <button class="card project-card reveal" data-project="dashboard" data-delay="0" aria-haspopup="dialog">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="mock">
+                <div class="mock-bar"><i></i><i></i><i></i></div>
+                <div class="mock-body">
+                  <div class="mock-grid"><i></i><i></i><i></i></div>
+                  <div class="mock-line c"></div>
+                  <div class="mock-line"></div>
+                  <div class="mock-line"></div>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>Sistema de Gestión / Dashboard Administrativo</h3>
+              <div class="tags">Web · Automatización</div>
+              <p>Métricas, pedidos y control de usuarios en un solo panel.</p>
+              <span class="project-open">Ver simulación <svg class="ic" style="width:16px;height:16px"><use href="#i-arrow"/></svg></span>
+            </div>
+          </button>
+
+          <button class="card project-card reveal" data-project="app" data-delay="1" aria-haspopup="dialog">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="mock" style="display:flex;justify-content:center;gap:10px;padding-top:14px">
+                <div style="width:62px;height:120px;border-radius:12px;border:3px solid #1b2a4a;background:#fff7ed;padding:8px;display:grid;gap:5px;align-content:start">
+                  <div class="mock-line c" style="width:80%"></div><div class="mock-line" style="background:#fdba74"></div><div class="mock-line" style="background:#fdba74"></div>
+                </div>
+                <div style="width:62px;height:120px;border-radius:12px;border:3px solid #1b2a4a;background:#fff7ed;padding:8px;display:grid;gap:5px;align-content:start;margin-top:22px">
+                  <div class="mock-line" style="background:#fdba74"></div><div class="mock-line c" style="width:70%"></div><div class="mock-line" style="background:#fdba74"></div>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>App Móvil de Hamburguesas / Delivery</h3>
+              <div class="tags">Apps · iOS · Android</div>
+              <p>Menú con platillos, carrito y pedidos desde el celular.</p>
+              <span class="project-open">Ver simulación <svg class="ic" style="width:16px;height:16px"><use href="#i-arrow"/></svg></span>
+            </div>
+          </button>
+
+          <button class="card project-card reveal" data-project="shop" data-delay="2" aria-haspopup="dialog">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="mock">
+                <div class="mock-bar"><i></i><i></i><i></i></div>
+                <div class="mock-body">
+                  <div class="mock-line c" style="width:45%"></div>
+                  <div class="mock-grid"><i></i><i></i><i></i></div>
+                  <div class="mock-grid"><i></i><i></i><i></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>E-commerce / Tienda con Pagos en Línea</h3>
+              <div class="tags">Web · Pagos en línea</div>
+              <p>Galería de productos, tallas y botón de pago.</p>
+              <span class="project-open">Ver simulación <svg class="ic" style="width:16px;height:16px"><use href="#i-arrow"/></svg></span>
+            </div>
+          </button>
+
+          <button class="card project-card reveal" data-project="landing" data-delay="3" aria-haspopup="dialog">
+            <div class="project-thumb" aria-hidden="true">
+              <div class="mock">
+                <div class="mock-bar"><i></i><i></i><i></i></div>
+                <div class="mock-body" style="justify-items:center;text-align:center">
+                  <div class="mock-line c" style="width:70%;height:10px"></div>
+                  <div class="mock-line" style="width:50%"></div>
+                  <div style="width:60px;height:14px;border-radius:999px;background:#2563eb;margin-top:4px"></div>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <h3>Landing Page Corporativa de Alta Conversión</h3>
+              <div class="tags">Web · Marketing</div>
+              <p>Página enfocada en convertir visitas en clientes.</p>
+              <span class="project-open">Ver simulación <svg class="ic" style="width:16px;height:16px"><use href="#i-arrow"/></svg></span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         F. COTIZADOR EXPRESS
+         ===================================================================== -->
+    <section class="quote" id="cotizar">
+      <div class="container quote-wrap">
+        <div class="quote-aside reveal">
+          <span class="eyebrow"><span class="dot"></span>Cotizador Express</span>
+          <h2>Cotiza en <span style="color:var(--blue-2)">3 pasos</span></h2>
+          <p>Elige lo que necesitas y te preparamos una cotización. Al final la envías directo a nuestro WhatsApp.</p>
+          <ul class="quote-points">
+            <li><svg class="ic"><use href="#i-check"/></svg>Respuesta en menos de 24 horas</li>
+            <li><svg class="ic"><use href="#i-shield"/></svg>Propuesta sin compromiso</li>
+            <li><svg class="ic"><use href="#i-headset"/></svg>Acompañamiento de principio a fin</li>
+          </ul>
+        </div>
+
+        <form class="card quote-box reveal" id="quote-form" novalidate data-delay="1">
+          <div class="progress" aria-hidden="true">
+            <span data-progress="1" class="done"></span>
+            <span data-progress="2"></span>
+            <span data-progress="3"></span>
+          </div>
+
+          <!-- Paso 1 -->
+          <div class="step active" data-step="1">
+            <p class="step-label">Paso 1 de 3</p>
+            <h3>¿Qué tipo de solución necesitas?</h3>
+            <p>Selecciona la categoría principal de tu proyecto.</p>
+            <div class="choice-grid" role="group" aria-label="Tipo de solución">
+              <button type="button" class="choice" data-type="Web" aria-pressed="false">
+                <svg class="ic"><use href="#i-code"/></svg>
+                <strong>Web</strong>
+                <small>Sitios, tiendas y landing pages</small>
+              </button>
+              <button type="button" class="choice" data-type="App" aria-pressed="false">
+                <svg class="ic"><use href="#i-phone"/></svg>
+                <strong>App</strong>
+                <small>Móvil, escritorio o paneles</small>
+              </button>
+              <button type="button" class="choice" data-type="Automatización" aria-pressed="false">
+                <svg class="ic"><use href="#i-gear"/></svg>
+                <strong>Automatización</strong>
+                <small>Procesos, integraciones y reportes</small>
+              </button>
+            </div>
+            <p class="error-msg" data-error="1"></p>
+          </div>
+
+          <!-- Paso 2 -->
+          <div class="step" data-step="2">
+            <p class="step-label">Paso 2 de 3</p>
+            <h3>¿Cuál es tu necesidad principal?</h3>
+            <p>Opciones para: <strong id="chosen-type" style="color:var(--white)">—</strong></p>
+            <div class="choice-grid" id="needs-options" role="group" aria-label="Necesidad principal"></div>
+            <p class="error-msg" data-error="2"></p>
+          </div>
+
+          <!-- Paso 3 -->
+          <div class="step" data-step="3">
+            <p class="step-label">Paso 3 de 3</p>
+            <h3>Últimos detalles y envío</h3>
+            <p>Estos datos son opcionales, pero nos ayudan a preparar una propuesta más precisa.</p>
+            <div class="field">
+              <label for="client-name">Tu nombre (opcional)</label>
+              <input type="text" id="client-name" maxlength="80" placeholder="Ej. María López" autocomplete="name">
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="client-budget">Presupuesto estimado</label>
+                <select id="client-budget">
+                  <option value="Por definir">Por definir</option>
+                  <option value="Menos de $15,000 MXN">Menos de $15,000 MXN</option>
+                  <option value="$15,000 - $40,000 MXN">$15,000 - $40,000 MXN</option>
+                  <option value="Más de $40,000 MXN">Más de $40,000 MXN</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="client-time">Plazo deseado</label>
+                <select id="client-time">
+                  <option value="Por definir">Por definir</option>
+                  <option value="Lo antes posible">Lo antes posible</option>
+                  <option value="1 a 2 meses">1 a 2 meses</option>
+                  <option value="3 meses o más">3 meses o más</option>
+                </select>
+              </div>
+            </div>
+            <div class="summary" id="summary" aria-live="polite"></div>
+          </div>
+
+          <div class="quote-nav">
+            <button type="button" class="btn btn-ghost" id="prev-step">Anterior</button>
+            <button type="button" class="btn btn-primary" id="next-step">Siguiente</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       G. FOOTER
+       ===================================================================== -->
+  <footer class="footer" id="contacto">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <div>
+          <h3>¿Listo para llevar tu idea al siguiente nivel?</h3>
+          <p>Cuéntanos tu proyecto y hagámoslo realidad.</p>
+        </div>
+        <a href="https://wa.me/525611717050" class="btn" data-wa="Hola Intelia, quiero llevar mi idea al siguiente nivel. ¿Hablamos?" target="_blank" rel="noopener noreferrer">
+          <svg class="ic"><use href="#i-wa"/></svg>
+          Hablemos por WhatsApp
+          <svg class="ic"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#inicio" class="brand" aria-label="INTELIA, ir al inicio">
+            <span class="brand-name">INTELIA</span>
+          </a>
+          <p>Agencia de desarrollo web, apps y automatización de procesos. Tecnología a tu medida, sin complicarte.</p>
+          <div class="socials">
+            <a href="#" class="social soon" aria-label="Facebook de Intelia (próximamente)" title="Próximamente" aria-disabled="true">
+              <svg class="ic"><use href="#i-fb"/></svg>
+            </a>
+            <a href="#" class="social soon" aria-label="Instagram de Intelia (próximamente)" title="Próximamente" aria-disabled="true">
+              <svg class="ic"><use href="#i-ig"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4>Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#cotizar">Cotizar</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Servicios</h4>
+          <ul class="footer-links">
+            <li><a href="#servicios">Desarrollo Web</a></li>
+            <li><a href="#servicios">Apps a Medida</a></li>
+            <li><a href="#servicios">Automatización</a></li>
+            <li><a href="#servicios">Soluciones en la Nube</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Contacto</h4>
+          <ul class="footer-links">
+            <li>
+              <a href="https://wa.me/525611717050" class="contact-line" data-wa="Hola Intelia, quiero más información." target="_blank" rel="noopener noreferrer">
+                <svg class="ic"><use href="#i-wa"/></svg>
+                +52 56 1171 7050
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> INTELIA. Todos los derechos reservados.</span>
+        <span>Hecho con tecnología a tu medida.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       MODAL DE SIMULACIÓN DE PROYECTO
+       ===================================================================== -->
+  <div class="modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-box" role="document">
+      <div class="modal-head">
+        <div>
+          <small id="modal-tag">Simulación</small>
+          <h3 id="modal-title">Proyecto</h3>
+        </div>
+        <button class="icon-btn" id="modal-close" aria-label="Cerrar simulación">
+          <svg class="ic"><use href="#i-close"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-toolbar">
+        <div class="seg" role="group" aria-label="Vista de la simulación">
+          <button type="button" data-view="desktop" aria-pressed="true"><svg class="ic"><use href="#i-desk"/></svg>Escritorio (Desktop)</button>
+          <button type="button" data-view="mobile" aria-pressed="false"><svg class="ic"><use href="#i-mobile"/></svg>Celular (Smartphone)</button>
+        </div>
+        <span style="color:var(--muted);font-size:.85rem">Simulación interactiva · datos ficticios</span>
+      </div>
+
+      <div class="preview-stage">
+        <div class="preview-frame" id="preview-frame">
+          <div class="browser-bar"><i></i><i></i><i></i><span id="preview-url">proyecto.intelia.demo</span></div>
+          <div class="preview" id="preview"></div>
+        </div>
+      </div>
+
+      <div class="modal-info">
+        <div>
+          <h4>Qué incluye este desarrollo</h4>
+          <p id="modal-desc"></p>
+          <ul id="modal-list"></ul>
+        </div>
+        <div class="modal-cta">
+          <p>¿Te gusta lo que ves? Podemos construir algo similar, adaptado a tu negocio.</p>
+          <a href="https://wa.me/525611717050" class="btn btn-wa btn-block" id="modal-wa" target="_blank" rel="noopener noreferrer">
+            <svg class="ic"><use href="#i-wa"/></svg>
+            Quiero un proyecto similar a este
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       CHATBOT FLOTANTE — Intelia (mascota búho)
+       ===================================================================== -->
+  <aside class="chat-panel" id="chat-panel" role="dialog" aria-modal="false" aria-label="Chat con Intelia" aria-hidden="true">
+    <div class="chat-head">
+      <div class="avatar"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#owl"/></svg></div>
+      <div>
+        <strong>Intelia 🦉</strong>
+        <small>Asistente IA · En línea</small>
+      </div>
+      <button class="icon-btn" id="chat-close" aria-label="Cerrar chat">
+        <svg class="ic"><use href="#i-close"/></svg>
+      </button>
+    </div>
+
+    <div class="chat-log" id="chat-log" aria-live="polite"></div>
+
+    <div class="chat-chips" id="chat-chips"></div>
+
+    <form class="chat-form" id="chat-form" autocomplete="off">
+      <input type="text" id="chat-input" maxlength="300" placeholder="Escribe tu respuesta..." aria-label="Escribe tu respuesta">
+      <button type="submit" aria-label="Enviar mensaje">
+        <svg class="ic"><use href="#i-send"/></svg>
+      </button>
+    </form>
+  </aside>
+
+  <button class="chat-fab" id="chat-fab" aria-label="Abrir chat con Intelia" aria-expanded="false" aria-controls="chat-panel">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#owl"/></svg>
+    <span class="badge-new" aria-hidden="true"></span>
+  </button>
+
+  <!-- WhatsApp flotante (secundario, esquina inferior izquierda) -->
+  <a href="https://wa.me/525611717050" class="wa-float" data-wa="Hola Intelia, quiero más información." target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp a Intelia" title="Escríbenos por WhatsApp">
+    <svg class="ic"><use href="#i-wa"/></svg>
+  </a>
+
+  <script>
+    (() => {
+      'use strict';
+
+      /* =====================================================================
+         0. UTILIDADES Y CONFIGURACIÓN
+         ===================================================================== */
+      const WA_NUMBER = '525611717050';
+      const waUrl = (message) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+      const $ = (sel, ctx = document) => ctx.querySelector(sel);
+      const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const initials = (name) => name.split(' ').map((w) => w[0]).slice(0, 2).join('');
+      const money = (n) => `$${Number(n).toLocaleString('es-MX')}`;
+
+      // Enlaces de WhatsApp con mensaje predeterminado (data-wa)
+      $$('[data-wa]').forEach((el) => {
+        el.href = waUrl(el.dataset.wa);
+        el.target = '_blank';
+        el.rel = 'noopener noreferrer';
+      });
+
+      // Año dinámico
+      const yearEl = $('#year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Mascota: si existe assets/buho.png se usa; si no, se mantiene el búho SVG integrado
+      const owlImg = $('#owl-img');
+      const owlSvg = $('#owl-svg');
+      const useOwlFile = () => { owlImg.classList.add('has-file'); owlSvg.hidden = true; };
+      owlImg.addEventListener('load', useOwlFile);
+      if (owlImg.complete && owlImg.naturalWidth > 0) useOwlFile();
+
+      // Enlaces de redes sociales "próximamente"
+      $$('.social.soon').forEach((el) => el.addEventListener('click', (e) => e.preventDefault()));
+
+      /* =====================================================================
+         1. HEADER: sombra al hacer scroll + enlace activo (scroll spy)
+         ===================================================================== */
+      const header = $('#header');
+      const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 12);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      const navLinks = $$('.nav-link');
+      const spy = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((a) => a.classList.toggle('active', a.dataset.section === entry.target.id));
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      ['inicio', 'servicios', 'proyectos', 'cotizar', 'contacto'].forEach((id) => {
+        const s = document.getElementById(id);
+        if (s) spy.observe(s);
+      });
+
+      /* =====================================================================
+         2. MENÚ MÓVIL (drawer)
+         ===================================================================== */
+      const menuBtn = $('#menu-btn');
+      const mobileMenu = $('#mobile-menu');
+      const menuIcon = $('#menu-icon use');
+
+      const setMenu = (open) => {
+        mobileMenu.classList.toggle('open', open);
+        document.body.classList.toggle('menu-open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+        menuBtn.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        menuIcon.setAttribute('href', open ? '#i-close' : '#i-menu');
+      };
+
+      menuBtn.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
+      $$('a', mobileMenu).forEach((a) => a.addEventListener('click', () => setMenu(false)));
+
+      /* =====================================================================
+         3. ANIMACIÓN AL APARECER (reveal)
+         ===================================================================== */
+      const revealObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      $$('.reveal').forEach((el) => revealObserver.observe(el));
+
+      /* =====================================================================
+         4. SERVICIOS: tarjetas con "Ver más" (despliegue)
+         ===================================================================== */
+      $$('.service-card').forEach((card) => {
+        const btn = $('.service-more', card);
+        btn.addEventListener('click', () => {
+          const open = card.classList.toggle('expanded');
+          btn.setAttribute('aria-expanded', String(open));
+          btn.firstChild.textContent = open ? 'Ver menos ' : 'Ver más ';
+        });
+      });
+
+      /* =====================================================================
+         5. SIMULADOR DE PROYECTOS
+         Cada proyecto genera un software independiente con su propia barra
+         de navegación, contenido y botón "Quiero un sistema idéntico a este".
+         ===================================================================== */
+      const simCta = (p) => `
+        <div class="sim-cta">
+          <a href="${waUrl(`Hola Intelia, quiero un sistema idéntico a este: ${p.title}. ¿Podemos platicarlo?`)}" target="_blank" rel="noopener noreferrer">
+            <svg class="ic"><use href="#i-wa"/></svg>
+            Quiero un sistema idéntico a este
+          </a>
+        </div>`;
+
+      const simShell = (p) => `
+        <div class="sim ${p.theme}">
+          <div class="status-bar" aria-hidden="true"><span>9:41</span><span>5G ▮</span></div>
+          <header class="sim-nav">${p.nav}</header>
+          <div class="sim-scroll" data-scroll>${p.body}</div>
+          ${simCta(p)}
+        </div>`;
+
+      const PROJECTS = {
+        /* ----------------------------------------------------------------
+           PROYECTO 1 · Sistema de gestión / Dashboard
+           ---------------------------------------------------------------- */
+        dashboard: {
+          theme: 't-dash',
+          tag: 'Proyecto 1 · Sistema de gestión',
+          title: 'Sistema de Gestión / Dashboard Administrativo',
+          url: 'admin.intelia.demo/dashboard',
+          desc: 'Panel administrativo para monitorear ventas, pedidos y clientes en tiempo real, con control de usuarios por rol y reportes exportables.',
+          items: [
+            'Indicadores clave (KPIs) actualizados al instante',
+            'Gráfica de ventas mensuales y metas del trimestre',
+            'Gestión de pedidos con seguimiento de estado',
+            'Control de usuarios: activar, desactivar y eliminar',
+          ],
+          nav: `
+            <div class="sim-brand"><span class="sim-logo">A</span><span class="sim-name">AdminPro</span></div>
+            <nav class="d-tabs" role="tablist" aria-label="Secciones del panel">
+              <button type="button" data-tab="resumen" class="on">Resumen</button>
+              <button type="button" data-tab="usuarios">Usuarios</button>
+              <button type="button" data-tab="pedidos">Pedidos</button>
+            </nav>
+            <div class="d-user" title="Ana Ramírez (Administradora)">AR</div>`,
+          body: `
+            <section class="d-pane" data-pane="resumen">
+              <div class="d-kpis">
+                <div class="d-kpi"><small>Ventas del mes</small><strong data-kpi="ventas">$128,450</strong><em>▲ 12.4%</em></div>
+                <div class="d-kpi"><small>Pedidos</small><strong data-kpi="pedidos">342</strong><em>▲ 8.1%</em></div>
+                <div class="d-kpi"><small>Usuarios activos</small><strong>1,208</strong><em>▲ 4.6%</em></div>
+                <div class="d-kpi"><small>Conversión</small><strong>3.8%</strong><em class="down">▼ 0.4%</em></div>
+              </div>
+              <div class="d-grid2">
+                <div class="d-card">
+                  <div class="d-card-head">
+                    <strong>Ventas mensuales</strong>
+                    <button type="button" class="d-btn d-btn-ghost d-btn-sm" data-refresh>Actualizar datos</button>
+                  </div>
+                  <div class="d-chart" data-bars>
+                    <i style="height:42%" title="Ene"></i><i style="height:55%" title="Feb"></i><i style="height:48%" title="Mar"></i><i style="height:63%" title="Abr"></i><i style="height:58%" title="May"></i><i style="height:72%" title="Jun"></i><i style="height:68%" title="Jul"></i><i style="height:80%" title="Ago"></i><i style="height:74%" title="Sep"></i><i style="height:88%" title="Oct"></i><i style="height:83%" title="Nov"></i><i style="height:95%" title="Dic"></i>
+                  </div>
+                  <div class="d-months"><span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span><span>Jun</span><span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dic</span></div>
+                </div>
+                <div class="d-card">
+                  <div class="d-card-head"><strong>Metas del trimestre</strong></div>
+                  <div class="d-prog"><div class="d-prog-top">Ventas <span>78%</span></div><div class="d-prog-bar"><i style="width:78%"></i></div></div>
+                  <div class="d-prog"><div class="d-prog-top">Clientes nuevos <span>54%</span></div><div class="d-prog-bar"><i style="width:54%"></i></div></div>
+                  <div class="d-prog"><div class="d-prog-top">Entregas a tiempo <span>91%</span></div><div class="d-prog-bar"><i style="width:91%"></i></div></div>
+                </div>
+              </div>
+              <div class="d-card">
+                <div class="d-card-head"><strong>Pedidos recientes</strong></div>
+                <div class="d-tablewrap">
+                  <table class="d-table">
+                    <thead><tr><th>Pedido</th><th>Cliente</th><th>Monto</th><th>Estado</th></tr></thead>
+                    <tbody>
+                      <tr><td>#1042</td><td>Ana Ramírez</td><td>$1,290</td><td><span class="badge b-info">Enviado</span></td></tr>
+                      <tr><td>#1043</td><td>Luis Martínez</td><td>$845</td><td><span class="badge b-warn">En proceso</span></td></tr>
+                      <tr><td>#1044</td><td>Sofía Torres</td><td>$2,310</td><td><span class="badge b-ok">Entregado</span></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section class="d-pane" data-pane="usuarios" hidden>
+              <div class="d-card">
+                <div class="d-toolbar">
+                  <input type="search" class="d-search" data-search placeholder="Buscar por nombre o rol..." aria-label="Buscar usuario">
+                  <button type="button" class="d-btn" data-add>+ Nuevo usuario</button>
+                </div>
+                <div class="d-tablewrap">
+                  <table class="d-table">
+                    <thead><tr><th>Usuario</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead>
+                    <tbody data-users></tbody>
+                  </table>
+                </div>
+              </div>
+              <p class="d-foot">Activos: <b data-count-active>0</b> · Total: <b data-count-total>0</b></p>
+            </section>
+
+            <section class="d-pane" data-pane="pedidos" hidden>
+              <div class="d-card">
+                <div class="d-card-head"><strong>Gestión de pedidos</strong><span class="d-foot">Avanza el estado de cada pedido</span></div>
+                <div class="d-tablewrap">
+                  <table class="d-table">
+                    <thead><tr><th>Pedido</th><th>Cliente</th><th>Monto</th><th>Estado</th><th>Acción</th></tr></thead>
+                    <tbody data-orders></tbody>
+                  </table>
+                </div>
+              </div>
+            </section>`,
+          init(root) {
+            const users = [
+              { name: 'Ana Ramírez', role: 'Administrador', active: true },
+              { name: 'Luis Martínez', role: 'Editor', active: true },
+              { name: 'Sofía Torres', role: 'Ventas', active: false },
+              { name: 'Carlos Gómez', role: 'Ventas', active: true },
+              { name: 'Mariana Ruiz', role: 'Soporte', active: true },
+            ];
+            const orders = [
+              { id: '#1045', client: 'Carlos Gómez', amount: 560, status: 'Nuevo' },
+              { id: '#1046', client: 'Mariana Ruiz', amount: 1775, status: 'En proceso' },
+              { id: '#1047', client: 'Ana Ramírez', amount: 940, status: 'Enviado' },
+              { id: '#1048', client: 'Luis Martínez', amount: 2120, status: 'Entregado' },
+            ];
+            const STATUS_FLOW = ['Nuevo', 'En proceso', 'Enviado', 'Entregado'];
+            const BADGE = { 'Nuevo': 'b-info', 'En proceso': 'b-warn', 'Enviado': 'b-info', 'Entregado': 'b-ok' };
+
+            const $r = (sel) => root.querySelector(sel);
+            const $rr = (sel) => Array.from(root.querySelectorAll(sel));
+            const usersBody = $r('[data-users]');
+            const ordersBody = $r('[data-orders]');
+            const search = $r('[data-search]');
+
+            const renderUsers = () => {
+              const q = search.value.trim().toLowerCase();
+              const list = users
+                .map((u, i) => ({ ...u, i }))
+                .filter((u) => u.name.toLowerCase().includes(q) || u.role.toLowerCase().includes(q));
+              usersBody.innerHTML = list.map((u) => `
+                <tr>
+                  <td><span class="d-av">${initials(u.name)}</span>${u.name}</td>
+                  <td>${u.role}</td>
+                  <td><span class="badge ${u.active ? 'b-ok' : 'b-off'}">${u.active ? 'Activo' : 'Inactivo'}</span></td>
+                  <td>
+                    <button type="button" class="d-btn d-btn-ghost d-btn-sm" data-toggle="${u.i}">${u.active ? 'Desactivar' : 'Activar'}</button>
+                    <button type="button" class="d-btn d-btn-danger d-btn-sm" data-del="${u.i}">Eliminar</button>
+                  </td>
+                </tr>`).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--sim-muted)">Sin resultados</td></tr>';
+              $r('[data-count-active]').textContent = users.filter((u) => u.active).length;
+              $r('[data-count-total]').textContent = users.length;
+            };
+
+            const renderOrders = () => {
+              ordersBody.innerHTML = orders.map((o, i) => `
+                <tr>
+                  <td>${o.id}</td>
+                  <td>${o.client}</td>
+                  <td>${money(o.amount)}</td>
+                  <td><span class="badge ${BADGE[o.status]}">${o.status}</span></td>
+                  <td><button type="button" class="d-btn d-btn-ghost d-btn-sm" data-advance="${i}" ${o.status === 'Entregado' ? 'disabled' : ''}>Avanzar</button></td>
+                </tr>`).join('');
+            };
+
+            const showPane = (name) => {
+              $rr('[data-tab]').forEach((b) => b.classList.toggle('on', b.dataset.tab === name));
+              $rr('.d-pane').forEach((p) => { p.hidden = p.dataset.pane !== name; });
+            };
+
+            const refreshData = () => {
+              $rr('[data-bars] i').forEach((bar) => { bar.style.height = `${Math.floor(Math.random() * 70) + 25}%`; });
+              $r('[data-kpi="ventas"]').textContent = money(Math.floor(Math.random() * 90000) + 90000);
+              $r('[data-kpi="pedidos"]').textContent = String(Math.floor(Math.random() * 300) + 200);
+            };
+
+            root.addEventListener('click', (e) => {
+              const tab = e.target.closest('[data-tab]');
+              if (tab) return showPane(tab.dataset.tab);
+
+              const toggle = e.target.closest('[data-toggle]');
+              if (toggle) {
+                const u = users[Number(toggle.dataset.toggle)];
+                u.active = !u.active;
+                return renderUsers();
+              }
+
+              const del = e.target.closest('[data-del]');
+              if (del) {
+                users.splice(Number(del.dataset.del), 1);
+                return renderUsers();
+              }
+
+              if (e.target.closest('[data-add]')) {
+                users.push({ name: `Nuevo usuario ${users.length + 1}`, role: 'Editor', active: true });
+                search.value = '';
+                return renderUsers();
+              }
+
+              const adv = e.target.closest('[data-advance]');
+              if (adv) {
+                const o = orders[Number(adv.dataset.advance)];
+                o.status = STATUS_FLOW[STATUS_FLOW.indexOf(o.status) + 1];
+                return renderOrders();
+              }
+
+              if (e.target.closest('[data-refresh]')) refreshData();
+            });
+
+            search.addEventListener('input', renderUsers);
+
+            renderUsers();
+            renderOrders();
+            showPane('resumen');
+          },
+        },
+
+        /* ----------------------------------------------------------------
+           PROYECTO 2 · App móvil de hamburguesas / delivery
+           ---------------------------------------------------------------- */
+        app: {
+          theme: 't-app',
+          tag: 'Proyecto 2 · App móvil de delivery',
+          title: 'App Móvil de Hamburguesas / Delivery',
+          url: 'burgerlab.intelia.demo',
+          desc: 'Aplicación móvil para pedir hamburguesas, combos y bebidas desde el celular, con carrito, confirmación de pedido y seguimiento de entrega.',
+          items: [
+            'Menú con categorías y fotos de platillos',
+            'Carrito con cantidades y total en tiempo real',
+            'Confirmación de pedido con tiempo estimado',
+            'Compatible con iOS y Android',
+          ],
+          nav: `
+            <div class="sim-brand"><span class="sim-logo">🍔</span><span class="sim-name">Burger Lab</span></div>
+            <button type="button" class="sim-cart" data-cart-toggle aria-label="Ver carrito">🛒 <span data-cart-n>0</span></button>`,
+          body: `
+            <div class="a-hero">
+              <small>Entregar en</small>
+              <strong>Col. Roma Norte · 25 min</strong>
+            </div>
+            <div class="a-cats" data-cats></div>
+            <div class="a-list" data-list></div>
+            <div class="a-cartpanel" data-cartpanel hidden>
+              <h4>Tu pedido</h4>
+              <div data-cart-items></div>
+              <div class="a-total"><span>Total</span><span data-cart-total>$0</span></div>
+              <button type="button" class="a-confirm" data-confirm disabled>Confirmar pedido</button>
+            </div>`,
+          init(root) {
+            const MENU = [
+              { id: 'b1', cat: 'Hamburguesas', name: 'Clásica Smash', desc: 'Carne 100 g, queso cheddar, pepinillos y salsa de la casa', price: 129, emoji: '🍔' },
+              { id: 'b2', cat: 'Hamburguesas', name: 'BBQ Bacon', desc: 'Tocino crujiente, salsa BBQ y cebolla caramelizada', price: 149, emoji: '🥓' },
+              { id: 'b3', cat: 'Hamburguesas', name: 'Doble Monstruo', desc: 'Doble carne, doble queso y salsa especial', price: 189, emoji: '🍔' },
+              { id: 'c1', cat: 'Combos', name: 'Combo Familiar', desc: '4 hamburguesas, papas grandes y 4 refrescos', price: 459, emoji: '🍟' },
+              { id: 'd1', cat: 'Bebidas', name: 'Refresco 600 ml', desc: 'Cola, lima-limón o naranja', price: 35, emoji: '🥤' },
+              { id: 'd2', cat: 'Bebidas', name: 'Malteada de vainilla', desc: 'Helado artesanal con crema batida', price: 79, emoji: '🥛' },
+              { id: 'p1', cat: 'Postres', name: 'Brownie con helado', desc: 'Brownie tibio con helado de vainilla', price: 65, emoji: '🍫' },
+            ];
+            const CATS = ['Todas', 'Hamburguesas', 'Combos', 'Bebidas', 'Postres'];
+            const cart = {};
+            let cat = 'Todas';
+            let done = false;
+
+            const $r = (sel) => root.querySelector(sel);
+            const catsEl = $r('[data-cats]');
+            const listEl = $r('[data-list]');
+            const panel = $r('[data-cartpanel]');
+            const itemsEl = $r('[data-cart-items]');
+            const totalEl = $r('[data-cart-total]');
+            const countEl = $r('[data-cart-n]');
+            const confirmBtn = $r('[data-confirm]');
+
+            const productById = (id) => MENU.find((m) => m.id === id);
+            const totals = () => Object.entries(cart).reduce((acc, [id, q]) => {
+              acc.n += q;
+              acc.sum += productById(id).price * q;
+              return acc;
+            }, { n: 0, sum: 0 });
+
+            const renderCats = () => {
+              catsEl.innerHTML = CATS.map((c) => `<button type="button" class="a-cat ${c === cat ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('');
+            };
+
+            const renderList = () => {
+              const items = MENU.filter((m) => cat === 'Todas' || m.cat === cat);
+              listEl.innerHTML = items.map((m) => `
+                <article class="a-item">
+                  <div class="a-emoji" aria-hidden="true">${m.emoji}</div>
+                  <div class="a-info">
+                    <strong>${m.name}</strong>
+                    <small>${m.desc}</small>
+                    <div class="a-row">
+                      <span class="a-price">${money(m.price)}</span>
+                      <button type="button" class="a-add" data-add="${m.id}">+ Agregar</button>
+                    </div>
+                  </div>
+                </article>`).join('');
+            };
+
+            const renderCart = () => {
+              const t = totals();
+              countEl.textContent = t.n;
+              totalEl.textContent = money(t.sum);
+              confirmBtn.disabled = t.n === 0;
+              if (done) {
+                itemsEl.innerHTML = '<div class="a-ok">¡Pedido confirmado! 🎉<small>Llega en aprox. 30 min · simulación</small></div>';
+                return;
+              }
+              const ids = Object.keys(cart);
+              itemsEl.innerHTML = ids.length
+                ? ids.map((id) => {
+                    const p = productById(id);
+                    return `
+                      <div class="a-line">
+                        <span>${p.name}</span>
+                        <span class="a-qty">
+                          <button type="button" data-qty="${id}" data-d="-1" aria-label="Quitar uno">−</button>
+                          ${cart[id]}
+                          <button type="button" data-qty="${id}" data-d="1" aria-label="Agregar uno">+</button>
+                        </span>
+                        <span>${money(p.price * cart[id])}</span>
+                      </div>`;
+                  }).join('')
+                : '<p class="a-empty">Tu carrito está vacío.</p>';
+            };
+
+            root.addEventListener('click', (e) => {
+              const catBtn = e.target.closest('[data-cat]');
+              if (catBtn) {
+                cat = catBtn.dataset.cat;
+                renderCats();
+                return renderList();
+              }
+
+              const addBtn = e.target.closest('[data-add]');
+              if (addBtn) {
+                const id = addBtn.dataset.add;
+                cart[id] = (cart[id] || 0) + 1;
+                done = false;
+                addBtn.classList.add('flash');
+                addBtn.textContent = '✓ Agregado';
+                setTimeout(() => { addBtn.classList.remove('flash'); addBtn.textContent = '+ Agregar'; }, 800);
+                return renderCart();
+              }
+
+              const qtyBtn = e.target.closest('[data-qty]');
+              if (qtyBtn) {
+                const id = qtyBtn.dataset.qty;
+                cart[id] += Number(qtyBtn.dataset.d);
+                if (cart[id] <= 0) delete cart[id];
+                return renderCart();
+              }
+
+              if (e.target.closest('[data-cart-toggle]')) {
+                panel.hidden = !panel.hidden;
+                return;
+              }
+
+              if (e.target.closest('[data-confirm]') && totals().n > 0) {
+                Object.keys(cart).forEach((id) => delete cart[id]);
+                done = true;
+                renderCart();
+              }
+            });
+
+            renderCats();
+            renderList();
+            renderCart();
+          },
+        },
+
+        /* ----------------------------------------------------------------
+           PROYECTO 3 · E-commerce con pagos en línea
+           ---------------------------------------------------------------- */
+        shop: {
+          theme: 't-shop',
+          tag: 'Proyecto 3 · E-commerce',
+          title: 'E-commerce / Tienda con Pagos en Línea',
+          url: 'tienda.intelia.demo',
+          desc: 'Tienda en línea con galería de productos, selección de color y talla, carrito y pagos en línea seguros, lista para vender desde el primer día.',
+          items: [
+            'Galería de imágenes y selección de color',
+            'Tallas con validación antes de pagar',
+            'Pagos con tarjeta, OXXO o transferencia',
+            'Panel para administrar inventario y pedidos',
+          ],
+          nav: `
+            <div class="sim-brand"><span class="sim-logo">U</span><span class="sim-name">URBAN</span></div>
+            <nav class="sim-links" aria-label="Categorías"><button type="button">Hombre</button><button type="button">Mujer</button><button type="button">Accesorios</button></nav>
+            <span class="sim-cart" aria-label="Carrito">🛒 <span data-cart-n>0</span></span>`,
+          body: `<div data-page></div>`,
+          init(root) {
+            const PRODUCTS = [
+              { name: 'Sudadera Urban Oversize', price: 899, emoji: '🧥', sizes: ['XS', 'S', 'M', 'L', 'XL'], colors: [['Negro', '#111827'], ['Arena', '#d6c7a1'], ['Azul', '#1e3a8a']], bgs: ['#e5e7eb', '#f3f4f6', '#dbeafe'], rating: 4.8, reviews: 214 },
+              { name: 'Tenis Runner Pro', price: 1499, emoji: '👟', sizes: ['25', '26', '27', '28', '29'], colors: [['Blanco', '#f9fafb'], ['Negro', '#111827'], ['Rojo', '#dc2626']], bgs: ['#f1f5f9', '#e2e8f0', '#fee2e2'], rating: 4.6, reviews: 388 },
+              { name: 'Gorra Minimal', price: 349, emoji: '🧢', sizes: ['Única'], colors: [['Negra', '#111827'], ['Crema', '#f5f0e1']], bgs: ['#f3f4f6', '#fef3c7', '#e5e7eb'], rating: 4.9, reviews: 97 },
+            ];
+            const METHODS = ['Tarjeta', 'OXXO', 'Transferencia'];
+            const page = $$('[data-page]', root)[0];
+            const cartEl = $('[data-cart-n]', root);
+
+            const state = {
+              cur: 0, size: null, color: 0, qty: 1, bg: 0,
+              cartCount: 0, payOpen: false, paid: false, method: 'Tarjeta',
+              msg: '', msgOk: false,
+            };
+
+            const resetFor = (idx) => {
+              Object.assign(state, { cur: idx, size: null, color: 0, qty: 1, bg: 0, payOpen: false, paid: false, msg: '', msgOk: false });
+              const p = PRODUCTS[idx];
+              if (p.sizes.length === 1) state.size = p.sizes[0];
+            };
+
+            const render = () => {
+              const p = PRODUCTS[state.cur];
+              const total = p.price * state.qty;
+              page.innerHTML = `
+                <div class="s-page">
+                  <div>
+                    <div class="s-main" style="background:${p.bgs[state.bg]}" aria-label="${p.name}">${p.emoji}</div>
+                    <div class="s-thumbs">
+                      ${p.bgs.map((bg, i) => `<button type="button" class="s-thumb" style="background:${bg}" data-thumb="${i}" aria-pressed="${i === state.bg}" aria-label="Vista ${i + 1}">${p.emoji}</button>`).join('')}
+                    </div>
+                  </div>
+                  <div>
+                    <p class="s-crumb">Inicio / ${p.name}</p>
+                    <h3 class="s-name">${p.name}</h3>
+                    <p class="s-rating"><b>★★★★★</b> ${p.rating} · ${p.reviews} reseñas</p>
+                    <div class="s-price">${money(p.price)} MXN</div>
+
+                    <div class="s-label">Color <span>${p.colors[state.color][0]}</span></div>
+                    <div class="s-colors">
+                      ${p.colors.map(([n, c], i) => `<button type="button" class="s-color" style="background:${c}" data-color="${i}" aria-pressed="${i === state.color}" aria-label="${n}" title="${n}"></button>`).join('')}
+                    </div>
+
+                    <div class="s-label">Talla <span>${state.size ? `Talla ${state.size}` : 'Selecciona una'}</span></div>
+                    <div class="s-sizes">
+                      ${p.sizes.map((s) => `<button type="button" class="s-size" data-size="${s}" aria-pressed="${s === state.size}">${s}</button>`).join('')}
+                    </div>
+
+                    <div class="s-label">Cantidad</div>
+                    <div class="s-qty">
+                      <button type="button" data-qty="-1" aria-label="Menos">−</button>
+                      <span>${state.qty}</span>
+                      <button type="button" data-qty="1" aria-label="Más">+</button>
+                    </div>
+
+                    <div class="s-actions">
+                      <button type="button" class="s-btn s-btn-out" data-addcart>Agregar al carrito</button>
+                      <button type="button" class="s-btn s-btn-dark" data-paynow>Pagar ahora · ${money(total)}</button>
+                    </div>
+                    <p class="s-msg ${state.msgOk ? 'ok' : ''}" data-msg>${state.msg}</p>
+
+                    ${state.payOpen && !state.paid ? `
+                      <div class="s-pay">
+                        <div class="s-methods">
+                          ${METHODS.map((m) => `<button type="button" class="s-method" data-method="${m}" aria-pressed="${m === state.method}">${m}</button>`).join('')}
+                        </div>
+                        <div class="s-sum"><span>Total a pagar</span><span>${money(total)}</span></div>
+                        <button type="button" class="s-btn s-btn-dark" data-confirmpay style="width:100%">Confirmar pago</button>
+                      </div>` : ''}
+
+                    ${state.paid ? `
+                      <div class="s-pay">
+                        <div class="s-ok">¡Pago aprobado! 🎉 Pedido #A-2048
+                          <small>Simulación · no se realizó ningún cobro</small>
+                        </div>
+                      </div>` : ''}
+                  </div>
+                </div>
+
+                <div class="s-related">
+                  <h5>También te puede gustar</h5>
+                  <div class="s-rel">
+                    ${PRODUCTS.map((r, i) => `
+                      <button type="button" data-rel="${i}" aria-pressed="${i === state.cur}">
+                        <em>${r.emoji}</em>
+                        <small>${r.name}</small>
+                        <span>${money(r.price)}</span>
+                      </button>`).join('')}
+                  </div>
+                </div>`;
+              cartEl.textContent = state.cartCount;
+            };
+
+            root.addEventListener('click', (e) => {
+              const t = (sel) => e.target.closest(sel);
+              const thumb = t('[data-thumb]');
+              if (thumb) { state.bg = Number(thumb.dataset.thumb); return render(); }
+
+              const color = t('[data-color]');
+              if (color) { state.color = Number(color.dataset.color); return render(); }
+
+              const size = t('[data-size]');
+              if (size) { state.size = size.dataset.size; state.msg = ''; return render(); }
+
+              const qty = t('[data-qty]');
+              if (qty) {
+                state.qty = Math.min(9, Math.max(1, state.qty + Number(qty.dataset.qty)));
+                return render();
+              }
+
+              if (t('[data-addcart]')) {
+                if (!state.size) { state.msg = 'Selecciona una talla antes de agregar.'; state.msgOk = false; return render(); }
+                state.cartCount += state.qty;
+                state.msg = `✓ ${state.qty} × ${PRODUCTS[state.cur].name} agregado al carrito`;
+                state.msgOk = true;
+                return render();
+              }
+
+              if (t('[data-paynow]')) {
+                if (!state.size) { state.msg = 'Selecciona una talla para continuar con el pago.'; state.msgOk = false; return render(); }
+                state.payOpen = true;
+                state.paid = false;
+                state.msg = '';
+                return render();
+              }
+
+              const method = t('[data-method]');
+              if (method) { state.method = method.dataset.method; return render(); }
+
+              if (t('[data-confirmpay]')) {
+                state.paid = true;
+                state.payOpen = false;
+                state.cartCount = 0;
+                return render();
+              }
+
+              const rel = t('[data-rel]');
+              if (rel) { resetFor(Number(rel.dataset.rel)); return render(); }
+            });
+
+            resetFor(0);
+            render();
+          },
+        },
+
+        /* ----------------------------------------------------------------
+           PROYECTO 4 · Landing page corporativa de alta conversión
+           ---------------------------------------------------------------- */
+        landing: {
+          theme: 't-land',
+          tag: 'Proyecto 4 · Landing page',
+          title: 'Landing Page Corporativa de Alta Conversión',
+          url: 'tumarca.intelia.demo',
+          desc: 'Página de aterrizaje diseñada para convertir visitas en prospectos: mensaje claro, prueba social, planes con precio y formulario de contacto.',
+          items: [
+            'Diseño enfocado en conversión con llamadas a la acción',
+            'Planes con cambio de facturación mensual o anual',
+            'Formulario de contacto con validación',
+            'Optimizada para SEO y velocidad de carga',
+          ],
+          nav: `
+            <div class="sim-brand"><span class="sim-logo">T</span><span class="sim-name">Tu Marca</span></div>
+            <nav class="sim-links" aria-label="Secciones"><button type="button" data-go="beneficios">Beneficios</button><button type="button" data-go="precios">Precios</button></nav>
+            <button type="button" class="l-btn" style="padding:8px 12px;font-size:.75rem" data-go="contacto">Solicitar demo</button>`,
+          body: `
+            <section class="l-hero">
+              <div>
+                <span class="l-badge">✨ Nuevo · Resultados en 30 días</span>
+                <h2>Convierte más visitas en <span>clientes reales</span></h2>
+                <p>Diseñamos tu landing con mensajes claros, prueba social y llamadas a la acción que venden.</p>
+                <div class="l-actions">
+                  <button type="button" class="l-btn" data-go="contacto">Solicitar demo</button>
+                  <button type="button" class="l-btn-ghost" data-go="precios">Ver precios</button>
+                </div>
+                <div class="l-trust">Confían en nosotros: <span>Cafés Aroma</span><span>Clínica Vida</span><span>Inmo Norte</span></div>
+              </div>
+              <div class="l-mock">
+                <div class="l-mock-top"><span>Leads este mes</span><b>▲ 214%</b></div>
+                <div class="l-mock-num">1,284</div>
+                <div class="l-mock-bars"><i style="height:35%"></i><i style="height:50%"></i><i style="height:42%"></i><i style="height:66%"></i><i style="height:58%"></i><i style="height:82%"></i><i style="height:100%"></i></div>
+                <div class="l-mock-leads"><span>Conversión 6.2%</span><span>CPL $18</span></div>
+              </div>
+            </section>
+
+            <section class="l-sec" data-sec="beneficios">
+              <h3>Todo lo que necesitas para vender</h3>
+              <p>Un sitio pensado para convertir, no solo para verse bien.</p>
+              <div class="l-cards">
+                <article class="l-card"><em>⚡</em><strong>Carga rápida</strong><small>Menos de 2 segundos en móvil para no perder visitas.</small></article>
+                <article class="l-card"><em>📈</em><strong>Medible</strong><small>Eventos y conversiones claros desde el primer día.</small></article>
+                <article class="l-card"><em>🔒</em><strong>Seguro</strong><small>Certificado SSL y buenas prácticas de privacidad.</small></article>
+              </div>
+              <div class="l-quote">
+                <div class="l-stars">★★★★★</div>
+                <p>"En un mes duplicamos las solicitudes de cotización. El diseño y el mensaje hicieron la diferencia."</p>
+                <small>— Directora comercial, Cafés Aroma</small>
+              </div>
+            </section>
+
+            <section class="l-sec" data-sec="precios">
+              <h3>Planes simples</h3>
+              <p>Elige el plan que se ajusta a tu etapa.</p>
+              <div class="l-toggle"><div role="group" aria-label="Facturación">
+                <button type="button" data-billing="mensual" aria-pressed="true">Mensual</button>
+                <button type="button" data-billing="anual" aria-pressed="false">Anual (−20%)</button>
+              </div></div>
+              <div class="l-plans" data-plans></div>
+            </section>
+
+            <section class="l-sec" data-sec="contacto">
+              <form class="l-form" data-form novalidate>
+                <h4>Agenda tu demo gratuita</h4>
+                <div class="l-grid2">
+                  <div class="l-field"><label for="l-name">Nombre</label><input id="l-name" type="text" data-name placeholder="Tu nombre" maxlength="60"></div>
+                  <div class="l-field"><label for="l-email">Correo</label><input id="l-email" type="email" data-email placeholder="tu@correo.com" maxlength="80"></div>
+                </div>
+                <div class="l-grid2">
+                  <div class="l-field"><label for="l-company">Empresa</label><input id="l-company" type="text" data-company placeholder="Nombre de tu empresa" maxlength="60"></div>
+                  <div class="l-field"><label for="l-plan">Plan de interés</label><select id="l-plan" data-plan-select><option>Básico</option><option selected>Pro</option><option>Empresa</option></select></div>
+                </div>
+                <button type="submit" class="l-submit">Quiero mi demo</button>
+                <p class="l-msg" data-lmsg></p>
+              </form>
+              <p class="l-foot">© Tu Marca · Simulación de landing page</p>
+            </section>`,
+          init(root) {
+            const PLANS = [
+              { name: 'Básico', m: 1490, a: 1190, feats: ['1 landing page', 'Diseño responsivo', 'Formulario de contacto', 'Soporte por correo'] },
+              { name: 'Pro', m: 2990, a: 2390, pop: true, feats: ['Hasta 5 secciones', 'Botón de WhatsApp', 'Métricas y eventos', 'SEO básico', 'Soporte prioritario'] },
+              { name: 'Empresa', m: 5490, a: 4390, feats: ['Páginas ilimitadas', 'Integraciones a medida', 'Pruebas A/B', 'Panel de leads', 'Soporte dedicado'] },
+            ];
+            const scroller = $('[data-scroll]', root);
+            const plansEl = $('[data-plans]', root);
+            const form = $('[data-form]', root);
+            const msgEl = $('[data-lmsg]', root);
+            const planSelect = $('[data-plan-select]', root);
+            const state = { billing: 'mensual', plan: 'Pro' };
+
+            const renderPlans = () => {
+              plansEl.innerHTML = PLANS.map((p) => {
+                const sel = p.name === state.plan;
+                const price = state.billing === 'mensual' ? p.m : p.a;
+                return `
+                  <article class="l-plan ${p.pop ? 'hot' : ''} ${sel ? 'sel' : ''}">
+                    ${p.pop ? '<span class="tag-pop">MÁS ELEGIDO</span>' : ''}
+                    <h4>${p.name}</h4>
+                    <div class="price">${money(price)}<small> MXN/mes</small></div>
+                    <ul>${p.feats.map((f) => `<li>${f}</li>`).join('')}</ul>
+                    <button type="button" data-plan="${p.name}">${sel ? 'Seleccionado' : 'Elegir plan'}</button>
+                  </article>`;
+              }).join('');
+              $$('[data-billing]', root).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.billing === state.billing)));
+            };
+
+            root.addEventListener('click', (e) => {
+              const go = e.target.closest('[data-go]');
+              if (go) {
+                const target = root.querySelector(`[data-sec="${go.dataset.go}"]`);
+                if (target) scroller.scrollTo({ top: target.offsetTop - 8, behavior: reduceMotion ? 'auto' : 'smooth' });
+                return;
+              }
+
+              const billing = e.target.closest('[data-billing]');
+              if (billing) { state.billing = billing.dataset.billing; return renderPlans(); }
+
+              const plan = e.target.closest('[data-plan]');
+              if (plan) {
+                state.plan = plan.dataset.plan;
+                planSelect.value = state.plan;
+                renderPlans();
+              }
+            });
+
+            planSelect.addEventListener('change', () => { state.plan = planSelect.value; renderPlans(); });
+
+            form.addEventListener('submit', (e) => {
+              e.preventDefault();
+              const name = $('[data-name]', root).value.trim();
+              const email = $('[data-email]', root).value.trim();
+              if (!name) { msgEl.className = 'l-msg err'; msgEl.textContent = 'Escribe tu nombre para continuar.'; return; }
+              if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msgEl.className = 'l-msg err'; msgEl.textContent = 'Escribe un correo válido.'; return; }
+              msgEl.className = 'l-msg ok';
+              msgEl.textContent = `¡Gracias, ${name}! Te contactamos en menos de 24 h. (simulación)`;
+              form.reset();
+              planSelect.value = state.plan;
+            });
+
+            renderPlans();
+          },
+        },
+      };
+
+      /* ---------- Modal del simulador ---------- */
+      const modal = $('#project-modal');
+      const preview = $('#preview');
+      const previewFrame = $('#preview-frame');
+      const previewUrl = $('#preview-url');
+      const modalTitle = $('#modal-title');
+      const modalTag = $('#modal-tag');
+      const modalDesc = $('#modal-desc');
+      const modalList = $('#modal-list');
+      const modalWa = $('#modal-wa');
+      const modalClose = $('#modal-close');
+      const viewBtns = $$('[data-view]', modal);
+      let lastFocus = null;
+
+      const setView = (view) => {
+        previewFrame.classList.toggle('is-mobile', view === 'mobile');
+        viewBtns.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === view)));
+      };
+
+      const openProject = (key, trigger) => {
+        const p = PROJECTS[key];
+        if (!p) return;
+        lastFocus = trigger || document.activeElement;
+
+        preview.innerHTML = simShell(p);
+        p.init(preview.querySelector('.sim'));
+
+        modalTag.textContent = p.tag;
+        modalTitle.textContent = p.title;
+        previewUrl.textContent = p.url;
+        modalDesc.textContent = p.desc;
+        modalList.innerHTML = '';
+        p.items.forEach((text) => {
+          const li = document.createElement('li');
+          li.textContent = text;
+          modalList.appendChild(li);
+        });
+        modalWa.href = waUrl(`Hola Intelia, me interesa un proyecto similar a: ${p.title}. ¿Podemos platicarlo?`);
+
+        setView('desktop');
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+        setTimeout(() => modalClose.focus(), 60);
+      };
+
+      const closeProject = () => {
+        if (!modal.classList.contains('open')) return;
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        preview.innerHTML = '';
+        if (lastFocus) lastFocus.focus();
+      };
+
+      $$('.project-card').forEach((card) => {
+        card.addEventListener('click', () => openProject(card.dataset.project, card));
+      });
+      modalClose.addEventListener('click', closeProject);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeProject(); });
+      viewBtns.forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
+
+      /* =====================================================================
+         6. CHATBOT INTELIA — entrevista guiada de 5 pasos
+         ===================================================================== */
+      const chatFab = $('#chat-fab');
+      const chatPanel = $('#chat-panel');
+      const chatClose = $('#chat-close');
+      const chatLog = $('#chat-log');
+      const chatForm = $('#chat-form');
+      const chatInput = $('#chat-input');
+      const chatChips = $('#chat-chips');
+      let typingEl = null;
+
+      const scrollChat = () => { chatLog.scrollTop = chatLog.scrollHeight; };
+
+      const addMessage = (text, who = 'bot') => {
+        const div = document.createElement('div');
+        div.className = `msg msg-${who}`;
+        div.textContent = text;
+        chatLog.appendChild(div);
+        scrollChat();
+      };
+
+      const addWaLink = (message, label) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'msg msg-link';
+        const a = document.createElement('a');
+        a.href = waUrl(message);
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.innerHTML = '<svg class="ic" style="width:17px;height:17px"><use href="#i-wa"/></svg>';
+        a.append(label);
+        wrap.appendChild(a);
+        chatLog.appendChild(wrap);
+        scrollChat();
+      };
+
+      const showTyping = (on) => {
+        if (on && !typingEl) {
+          typingEl = document.createElement('div');
+          typingEl.className = 'typing';
+          typingEl.setAttribute('aria-label', 'Intelia está escribiendo');
+          typingEl.innerHTML = '<i></i><i></i><i></i>';
+          chatLog.appendChild(typingEl);
+          scrollChat();
+        } else if (!on && typingEl) {
+          typingEl.remove();
+          typingEl = null;
+        }
+      };
+
+      // Respuesta simulada con retraso de "escritura"
+      const botReply = (text) => new Promise((resolve) => {
+        showTyping(true);
+        const delay = reduceMotion ? 0 : Math.min(600 + text.length * 14, 1600);
+        setTimeout(() => {
+          showTyping(false);
+          addMessage(text, 'bot');
+          resolve();
+        }, delay);
+      });
+
+      const TYPE_OPTIONS = [
+        { key: 'web', label: 'Página Web / Tienda Online' },
+        { key: 'app', label: 'App Móvil' },
+        { key: 'auto', label: 'Automatizar Procesos' },
+        { key: 'gestion', label: 'Sistema de Gestión' },
+      ];
+
+      const OBJECTIVES = {
+        web: ['Vender productos en línea', 'Dar a conocer mi marca', 'Captar clientes con una landing', 'Mejorar mi sitio actual'],
+        app: ['Gestionar citas o reservas', 'Vender productos desde el celular', 'Comunicarme con mis clientes', 'Automatizar tareas del equipo'],
+        auto: ['Ahorrar tiempo en tareas repetitivas', 'Conectar mis herramientas', 'Generar reportes automáticos', 'Reducir errores manuales'],
+        gestion: ['Controlar ventas y pedidos', 'Administrar clientes e inventario', 'Centralizar la información', 'Ver reportes para la dirección'],
+      };
+
+      const OTHER_KEY = '__otro__';
+      const flow = { step: 'idle', name: '', type: '', typeLabel: '', objective: '' };
+      let busy = false;
+
+      const setInput = (enabled, placeholder = 'Escribe tu respuesta...') => {
+        chatInput.disabled = !enabled;
+        chatInput.placeholder = placeholder;
+        if (enabled) chatInput.focus();
+      };
+
+      const clearChips = () => { chatChips.innerHTML = ''; };
+
+      const renderChips = (options, onPick) => {
+        clearChips();
+        options.forEach((opt) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'chip';
+          btn.textContent = opt.label;
+          btn.addEventListener('click', () => { if (!busy) onPick(opt); });
+          chatChips.appendChild(btn);
+        });
+      };
+
+      // Intelia "escribe" y espera a que termine antes de aceptar más entradas
+      const say = async (text) => {
+        busy = true;
+        await botReply(text);
+        busy = false;
+      };
+
+      const buildChatMessage = () => [
+        'Hola, estuve interactuando con el asistente de INTELIA en su sitio web.',
+        `📌 Nombre/Negocio: ${flow.name}`,
+        `📌 Proyecto: ${flow.typeLabel}`,
+        `📌 Objetivo: ${flow.objective}`,
+        'Me gustaría recibir su cotización.',
+      ].join('\n');
+
+      const finish = async () => {
+        flow.step = 'done';
+        clearChips();
+        setInput(false, 'Conversación completa. Pulsa "Empezar de nuevo" para otra consulta.');
+        await say('¡Genial! Tengo toda la información lista para armar tu propuesta personalizada.');
+        addMessage(`Resumen de tu consulta:\n• Negocio: ${flow.name}\n• Proyecto: ${flow.typeLabel}\n• Objetivo: ${flow.objective}`, 'bot');
+        addWaLink(buildChatMessage(), 'Enviar mi información por WhatsApp');
+        renderChips([{ key: 'restart', label: 'Empezar de nuevo' }], () => resetChat());
+      };
+
+      const onObjective = async (opt) => {
+        clearChips();
+        addMessage(opt.label, 'user');
+        if (opt.key === OTHER_KEY) {
+          flow.step = 'objective-text';
+          await say('Cuéntame brevemente el objetivo principal de tu proyecto.');
+          setInput(true, 'Escribe el objetivo de tu proyecto...');
+          return;
+        }
+        flow.objective = opt.label;
+        await finish();
+      };
+
+      const onType = async (opt) => {
+        clearChips();
+        addMessage(opt.label, 'user');
+        flow.type = opt.key;
+        flow.typeLabel = opt.label;
+        flow.step = 'objective';
+        await say('¿Cuál es el objetivo principal del proyecto?');
+        const options = OBJECTIVES[opt.key].map((label) => ({ key: label, label }));
+        options.push({ key: OTHER_KEY, label: 'Otro (escribir)' });
+        renderChips(options, onObjective);
+      };
+
+      const askType = async () => {
+        flow.step = 'type';
+        await say(`Gracias, ${flow.name}. ¿Qué tipo de solución buscas?`);
+        renderChips(TYPE_OPTIONS, onType);
+      };
+
+      const startChat = async () => {
+        if (flow.step !== 'idle') return;
+        flow.step = 'greeting';
+        await say('¡Hola! Soy Intelia 🦉, tu asesor tecnológico. ¿Cuál es el nombre de tu empresa o negocio?');
+        flow.step = 'name';
+        setInput(true, 'Escribe el nombre de tu negocio...');
+      };
+
+      const resetChat = () => {
+        if (busy) return;
+        chatLog.innerHTML = '';
+        clearChips();
+        setInput(false);
+        Object.assign(flow, { step: 'idle', name: '', type: '', typeLabel: '', objective: '' });
+        startChat();
+      };
+
+      const openChat = () => {
+        chatPanel.classList.add('open');
+        chatPanel.setAttribute('aria-hidden', 'false');
+        chatFab.setAttribute('aria-expanded', 'true');
+        startChat();
+      };
+
+      const closeChat = () => {
+        chatPanel.classList.remove('open');
+        chatPanel.setAttribute('aria-hidden', 'true');
+        chatFab.setAttribute('aria-expanded', 'false');
+      };
+
+      chatFab.addEventListener('click', () => {
+        chatPanel.classList.contains('open') ? closeChat() : openChat();
+      });
+      chatClose.addEventListener('click', closeChat);
+
+      chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (busy || chatInput.disabled) return;
+        const text = chatInput.value.trim();
+        if (!text) return;
+        chatInput.value = '';
+        if (flow.step === 'name') {
+          flow.name = text;
+          addMessage(text, 'user');
+          setInput(false);
+          askType();
+        } else if (flow.step === 'objective-text') {
+          flow.objective = text;
+          addMessage(text, 'user');
+          finish();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        if (modal.classList.contains('open')) closeProject();
+        else if (chatPanel.classList.contains('open')) closeChat();
+        setMenu(false);
+      });
+
+      /* =====================================================================
+         7. COTIZADOR EXPRESS (3 pasos + URL de WhatsApp)
+         ===================================================================== */
+      const NEEDS = {
+        Web: ['Sitio web corporativo', 'Tienda en línea', 'Landing page', 'Rediseño de sitio'],
+        App: ['App móvil (iOS y Android)', 'App de escritorio', 'Panel o dashboard web'],
+        Automatización: ['Automatizar procesos internos', 'Integración de sistemas / APIs', 'Reportes automáticos', 'Bases de datos y nube'],
+      };
+
+      const quote = { type: null, need: null, step: 1 };
+      const quoteForm = $('#quote-form');
+      const quoteSteps = $$('.step', quoteForm);
+      const progressBars = $$('[data-progress]', quoteForm);
+      const prevBtn = $('#prev-step');
+      const nextBtn = $('#next-step');
+      const needsBox = $('#needs-options');
+      const clientName = $('#client-name');
+      const clientBudget = $('#client-budget');
+      const clientTime = $('#client-time');
+      const summaryBox = $('#summary');
+
+      const setError = (step, msg = '') => {
+        const el = $(`[data-error="${step}"]`, quoteForm);
+        if (el) el.textContent = msg;
+      };
+
+      const renderNeeds = () => {
+        needsBox.innerHTML = '';
+        NEEDS[quote.type].forEach((need) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'choice';
+          btn.setAttribute('aria-pressed', String(quote.need === need));
+          const strong = document.createElement('strong');
+          strong.textContent = need;
+          btn.appendChild(strong);
+          btn.addEventListener('click', () => {
+            quote.need = need;
+            setError(2);
+            $$('.choice', needsBox).forEach((o) => o.setAttribute('aria-pressed', String(o === btn)));
+          });
+          needsBox.appendChild(btn);
+        });
+      };
+
+      const buildQuoteMessage = () => {
+        const name = clientName.value.trim();
+        const lines = [
+          'Hola Intelia, quiero una cotización express:',
+          '',
+          `• Tipo de solución: ${quote.type}`,
+          `• Necesidad principal: ${quote.need}`,
+          `• Presupuesto estimado: ${clientBudget.value}`,
+          `• Plazo deseado: ${clientTime.value}`,
+        ];
+        if (name) lines.push(`• Nombre: ${name}`);
+        return lines.join('\n');
+      };
+
+      const renderSummary = () => {
+        summaryBox.innerHTML = '';
+        const rows = [
+          ['Tipo de solución', quote.type],
+          ['Necesidad', quote.need],
+          ['Presupuesto', clientBudget.value],
+          ['Plazo', clientTime.value],
+          ['Nombre', clientName.value.trim() || 'No indicado'],
+        ];
+        rows.forEach(([label, value]) => {
+          const row = document.createElement('div');
+          const span = document.createElement('span');
+          const b = document.createElement('b');
+          span.textContent = label;
+          b.textContent = value;
+          row.append(span, b);
+          summaryBox.appendChild(row);
+        });
+      };
+
+      const showQuoteStep = (n) => {
+        quote.step = n;
+        quoteSteps.forEach((s) => s.classList.toggle('active', Number(s.dataset.step) === n));
+        progressBars.forEach((p) => p.classList.toggle('done', Number(p.dataset.progress) <= n));
+        prevBtn.style.visibility = n === 1 ? 'hidden' : 'visible';
+        nextBtn.innerHTML = '';
+        if (n === 3) {
+          nextBtn.append('Enviar por WhatsApp');
+          const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          icon.setAttribute('class', 'ic');
+          icon.innerHTML = '<use href="#i-send"/>';
+          nextBtn.appendChild(icon);
+        } else {
+          nextBtn.append('Siguiente');
+        }
+        if (n === 2) {
+          $('#chosen-type').textContent = quote.type;
+          renderNeeds();
+        }
+        if (n === 3) renderSummary();
+      };
+
+      $$('.choice[data-type]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          quote.type = btn.dataset.type;
+          quote.need = null;
+          $$('.choice[data-type]').forEach((o) => o.setAttribute('aria-pressed', String(o === btn)));
+          setError(1);
+        });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (quote.step === 1) {
+          if (!quote.type) return setError(1, 'Selecciona un tipo de solución para continuar.');
+          return showQuoteStep(2);
+        }
+        if (quote.step === 2) {
+          if (!quote.need) return setError(2, 'Selecciona una necesidad para continuar.');
+          return showQuoteStep(3);
+        }
+        // Paso 3: generar la URL de WhatsApp con el resumen de la cotización
+        window.open(waUrl(buildQuoteMessage()), '_blank', 'noopener,noreferrer');
+      });
+
+      prevBtn.addEventListener('click', () => {
+        if (quote.step > 1) showQuoteStep(quote.step - 1);
+      });
+
+      quoteForm.addEventListener('submit', (e) => e.preventDefault());
+
+      /* =====================================================================
+         8. INICIALIZACIÓN
+         ===================================================================== */
+      showQuoteStep(1);
+    })();
+  </script>
+</body>
+</html>
